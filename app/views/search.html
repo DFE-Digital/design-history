@@ -1,26 +1,31 @@
   {% extends "layouts/content-with-sidenav.html" %}
 
 {% set pageName = "Search results" %}
-{% set selectedNav = "Home" %}
-{% set setSelectedSideNav = "" %}
-{% set backlog_issue_id = "" %}
 
 {% block beforeContent %}{% endblock %}
 
 {% block content %}
 
   <article>
-    <div class="govuk-grid-row">
-      <div class="govuk-grid-column-two-thirds">
-        {% if results | length > 0 %}
+
+
+
+
+        {% if results.data | length > 0 %}
           <p class="govuk-u-margin-bottom-3">
-           {{ resultsLen }} result{%if results | length != 1%}s{%endif%}
+           {{ resultsLen }} Result{%if results | length != 1%}s{%endif%} for {{searchTerm}}
          </p>
           <ul class="govuk-list govuk-list--border">
-            {% for item in results %}
+            {% for item in results.data %}
               <li>
-                <p class="govuk-!-margin-bottom-2"><a href="{{item.url}}" class="govuk-!-font-weight-bold govuk-link govuk-!-font-size-24">{{item.title}}</a></p>
-                <p class="govuk-body-s govuk-u-margin-top-1">{{item.description}}</p>
+                <p class="govuk-!-margin-bottom-2">
+                  <a href="/{{item.attributes.service.data.attributes.Slug}}/{{item.attributes.Slug}}" class="govuk-!-font-weight-bold govuk-link govuk-!-font-size-24">{{item.attributes.Title}}</a></p>
+                <p class="govuk-body-s govuk-u-margin-top-1">{{item.attributes.Lede}}</p>
+                    <p class="govuk-body-s">Published: {% if post.attributes.Publication_date %}
+                                {{ item.attributes.Publication_date | date('D MMMM YYYY')}}
+                            {% else %}
+                                {{ item.attributes.publishedAt | date('D MMMM YYYY')}}
+                            {% endif %}</p>
               </li>
             {% endfor %}
           </ul>
@@ -33,8 +38,7 @@
               <li>searching for something less specific</li>
             </ul>
         {% endif %}
-        </div>
-    </div>
+   
   </article>
 
   {% endblock %}

@@ -1,0 +1,68 @@
+{% extends "layouts/content-with-sidenav.html" %}
+
+{% set data = data.data[0].attributes%}
+
+{% set pageName = data.Title %}
+{% set pageDescription = data.Lede %}
+{% set body = data.Body | safe%}
+
+{% set tags = data.tag %}
+
+
+
+{% set service = data.service.data.attributes.Title %}
+{% set team = data.team.data.attributes.Title %}
+
+{% set dateUpdated = (data.Publication_date if data.Publication_date else 
+    data.publishedAt
+) %}
+
+
+
+{% block breadcrumb %}
+    <div class="govuk-breadcrumbs">
+        <ol class="govuk-breadcrumbs__list">
+            <li class="govuk-breadcrumbs__list-item">
+                <a class="govuk-breadcrumbs__link" href="/">Home</a>
+            </li>
+
+            <li class="govuk-breadcrumbs__list-item">
+                <a class="govuk-breadcrumbs__link" href="/team/{{services.data[0].attributes.team.data.attributes.Slug}}">{{services.data[0].attributes.team.data.attributes.Title}}</a>
+            </li>
+            <li class="govuk-breadcrumbs__list-item">
+                <a class="govuk-breadcrumbs__link" href="/{{data.service.data.attributes.Slug}}">{{service}}</a>
+            </li>
+        </ol>
+    </div>
+{% endblock %}
+
+{% block content %}
+
+
+    <div class="post">
+        {% markdown %}
+
+        {{data.Body | safe}}
+
+        {% endmarkdown %}
+    </div>
+{% endblock %}
+
+{% block sideContent %}
+
+    {% if data.tags.data.length %}
+        <h2 class="govuk-heading-m">Tags</h2>
+
+        {% for tag in data.tags.data %}
+
+            <a href="/tag/{{tag.attributes.Slug}}" class="dfe-dh-tag">{{tag.attributes.Tag}}</a>
+
+        {% endfor %}
+
+    {% endif %}
+
+    <h2 class="govuk-heading-m {% if data.tags.data.length%}govuk-!-margin-top-5{% endif%}">Share this post</h2>
+
+    <div class="addthis_inline_share_toolbox"></div>
+
+{% endblock %}

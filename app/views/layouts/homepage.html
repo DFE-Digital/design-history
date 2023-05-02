@@ -9,7 +9,7 @@
     <meta charset="utf-8">
     <title>
       {% if seoPageName %}{{seoPageName}}
-      {% elseif pageName %}{{pageName}}{% else%}Design Manual{%endif%}</title>
+      {% elseif pageName %}{{pageName}}{% else%}Design History service{%endif%}</title>
       <meta name="description" content="{% if seoPageDescription %}{{seoPageDescription}}{% elseif pageName %}{{pageDescription}}{%endif%}">
       <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
       <meta name="theme-color" content="#0b0c0c">
@@ -23,7 +23,7 @@
       <link href="/assets/css/app.min.css" rel="stylesheet">
       {% block head %}{% endblock %}
     </head>
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-D2V3LRNYBJ"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-Z4G55VN0FB"></script>
 
     <body class="govuk-template__body ">
 
@@ -33,6 +33,8 @@
           ? document.body.className + ' js-enabled'
           : 'js-enabled');
       </script>
+
+     
 
       {% include 'layouts/_cookiebanner.html'%}
 

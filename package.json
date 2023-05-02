@@ -1,6 +1,6 @@
 {
-  "name": "dfe-design",
-  "version": "3.0.0",
+  "name": "dfe-design-history-frontend",
+  "version": "2.1.0",
   "description": "",
   "main": "index.js",
   "scripts": {

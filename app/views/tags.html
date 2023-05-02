@@ -1,0 +1,56 @@
+{% extends "layouts/content-with-sidenav.html" %}
+
+
+{% set pageName = "Posts tagged '" + tag.data[0].attributes.Tag + "'"%}
+
+
+
+
+
+{% block content %}
+     <h2 class="govuk-heading-l">Posts</h2>
+    {% if posts %}
+        <div class="dfe-grid-container dfe-grid-container--wider">
+
+        
+
+  {% for post in posts.data %}
+
+          <div class="dfe-card">
+              
+            <div class="dfe-card--text-header">
+              <div class="dfe-card--text-header-container">
+                <h2 class="govuk-heading-m">
+                  <a class="govuk-link govuk-link--no-visited-state dfe-card-link--header" href="/{{post.attributes.service.data.attributes.Slug}}/{{post.attributes.Slug}}">{{post.attributes.Title}}</a>
+                </h2>
+              </div>
+            </div>
+
+            <div class="dfe-card-container">
+              <p>{{post.attributes.Lede}}</p>
+              <p class="govuk-body-s">Published: {% if post.attributes.Publication_date %}
+                                {{ post.attributes.Publication_date | date('D MMMM YYYY')}}
+                            {% else %}
+                                {{ post.attributes.publishedAt | date('D MMMM YYYY')}}
+                            {% endif %}</p>
+            </div>
+          </div>
+
+  {% endfor %}
+
+        </div>
+        {% else%}
+        <h2 class="govuk-heading-m">There are no posts for this service.</h2>
+    {% endif %}
+{% endblock %}
+
+{% block sideContent %}
+ <h2 class="govuk-heading-l">Tags</h2>
+      {% for tag in tags.data %}
+        <a href="/tag/{{tag.attributes.Slug}}" class="dfe-dh-tag">{{tag.attributes.Tag}}</a>
+      {% endfor %}
+
+    
+    </div>
+{% endblock %}
+

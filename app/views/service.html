@@ -1,0 +1,60 @@
+{% extends "layouts/content-with-sidenav.html" %}
+
+{% set pageName = services
+    .data[0]
+    .attributes
+    .Title + " posts" %}
+{% set pageDescription = services.data[0].attributes.Description%}
+
+{% block breadcrumb %}
+<div class="govuk-breadcrumbs">
+  <ol class="govuk-breadcrumbs__list">
+    <li class="govuk-breadcrumbs__list-item">
+      <a class="govuk-breadcrumbs__link" href="/">Home</a>
+    </li>
+  <li class="govuk-breadcrumbs__list-item">
+                <a class="govuk-breadcrumbs__link" href="/team/{{services.data[0].attributes.team.data.attributes.Slug}}">{{services.data[0].attributes.team.data.attributes.Title}}</a>
+            </li>
+  </ol>
+</div>
+{% endblock %}
+
+
+{% block content %}
+    <h2 class="govuk-heading-m">Post by this team</h2>
+
+    {% if services %}
+        <div class="dfe-grid-container dfe-grid-container--wider">
+
+  {% for post in posts.data %}
+
+          <div class="dfe-card">
+              
+            <div class="dfe-card--text-header">
+              <div class="dfe-card--text-header-container">
+                <h2 class="govuk-heading-m">
+                  <a class="govuk-link govuk-link--no-visited-state dfe-card-link--header" href="/{{services.data[0].attributes.Slug}}/{{post.attributes.Slug}}">{{post.attributes.Title}}</a>
+                </h2>
+              </div>
+            </div>
+
+            <div class="dfe-card-container">
+              <p>{{post.attributxes.Lede}}</p>
+              <p class="govuk-body-s">Published: {% if post.attributes.Publication_date %}
+                                {{ post.attributes.Publication_date | date('D MMMM YYYY')}}
+                            {% else %}
+                                {{ post.attributes.publishedAt | date('D MMMM YYYY')}}
+                            {% endif %}</p>
+            </div>
+          </div>
+
+  {% endfor %}
+
+        </div>
+        {% else%}
+        <h2 class="govuk-heading-m">There are no posts for this service.</h2>
+    {% endif %}
+{% endblock %}
+
+{% block sideContent %}{% endblock %}
+

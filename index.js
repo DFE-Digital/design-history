@@ -5,36 +5,21 @@ const axios = require('axios')
 var dateFilter = require('nunjucks-date-filter')
 var markdown = require('nunjucks-markdown')
 var marked = require('marked')
-var Recaptcha = require('express-recaptcha').RecaptchaV3
 const bodyParser = require('body-parser')
-const lunr = require('lunr')
-const fs = require('fs')
-const path = require('path')
-const cheerio = require('cheerio')
-const config = require('./app/config')
-
-const PageIndex = require('./middleware/pageIndex')
-const pageIndex = new PageIndex(config)
-
 var NotifyClient = require('notifications-node-client').NotifyClient
 
 require('dotenv').config()
 const app = express()
 
 const notify = new NotifyClient(process.env.notifyKey)
-const recaptcha = new Recaptcha(
-  process.env.recaptchaPublic,
-  process.env.recaptchaSecret,
-  { callback: 'cb' },
-)
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 
 app.set('view engine', 'html')
 
-app.locals.serviceName = 'Design Manual'
-app.locals.recaptchaPublic = process.env.recaptchaPublic
+app.locals.serviceName = 'Design Histories'
+app.locals.BASE_URL = process.env.BASE_URL;
 
 // Set up Nunjucks as the template engine
 var nunjuckEnv = nunjucks.configure(
@@ -62,39 +47,77 @@ app.get('/sitemap.xml', (_, res) => {
 });
 
 
-app.get('/search', (req, res) => {
-  console.log(req.query['search-field'])
-  const query = req.query['search-field'] || ''
-  const resultsPerPage = 10
-  let currentPage = parseInt(req.query.page, 10)
-  const results = pageIndex.search(query)
-  console.log('Results: ' + results)
-  console.log('Query: ' + query)
+app.get('/search', async (req, res) => {
+  const searchTerm = req.query['search-field'] || ''
+  let results = [];
 
-  const maxPage = Math.ceil(results.length / resultsPerPage)
-  if (!Number.isInteger(currentPage)) {
-    currentPage = 1
-  } else if (currentPage > maxPage || currentPage < 1) {
-    currentPage = 1
+  if (searchTerm) { // Only query Strapi if a search term was provided
+    try {
+      // Query Strapi for posts and services with matching titles
+
+      var posts = {
+        method: 'get',
+        url: `${process.env.cmsurl}api/posts?_q=${searchTerm}&populate=%2A`,
+        headers: {
+          Authorization: 'Bearer ' + process.env.apikey,
+        },
+      }
+  
+        axios(posts)
+          .then(function (responses) {
+            var results = responses.data
+  
+            res.render('search.html', { searchTerm, results })
+          })
+          .catch(function (error) {
+            console.log(error)
+          })
+      
+    
+
+    } catch(err){
+      console.log(err)
+        // Render the search results template with the matching results
+  res.render('search.html', { searchTerm, results });
+    }
   }
 
-  const startingIndex = resultsPerPage * (currentPage - 1)
-  const endingIndex = startingIndex + resultsPerPage
 
-  res.render('search.html', {
-    currentPage,
-    maxPage,
-    query,
-    results: results.slice(startingIndex, endingIndex),
-    resultsLen: results.length,
-  })
+});
+
+app.get('/start-design-history', (req, res) => {
+  return res.render('start-design-history')
 })
 
-if (config.env !== 'development') {
-  setTimeout(() => {
-    pageIndex.init()
-  }, 2000)
-}
+app.get('/guidance', (req, res) => { 
+  return res.render('guidance')
+})
+
+app.post('/start-design-history', (req, res) => {
+  const email = req.body.email
+  const name = req.body.name
+
+  //Send to notify after validation with recaptcha first
+  //TODO: Implement recaptcha
+
+  notify
+    .sendEmail(process.env.designHistoryRequest, 'design.ops@education.gov.uk', {
+      personalisation: {
+        email: email,
+        name: name,
+      },
+    })
+    .then((response) => {})
+    .catch((err) => console.log(err))
+
+  return res.redirect('/requested')
+})
+
+app.get('/requested', (req, res) => {
+ 
+  return res.render('requested.html')
+})
+
 
 app.post('/submit-feedback', (req, res) => {
   const feedback = req.body.feedback_form_input
@@ -116,49 +139,232 @@ app.post('/submit-feedback', (req, res) => {
   return res.sendStatus(200)
 })
 
-app.get('/design-system/dfe-frontend', function (req, res, next) {
-  const packageName = 'dfe-frontend-alpha'
-  let version = '-'
 
-  axios
-    .get(`https://registry.npmjs.org/${packageName}`)
-    .then((response) => {
-      const version = response.data['dist-tags'].latest
-      const lastUpdatedv = new Date(response.data.time.modified).toISOString()
+app.get('/', function (req, res) {
+  var config = {
+    method: 'get',
+    url: `${process.env.cmsurl}api/teams?filters[Enabled][\$eq]=true&sort=Title&populate=%2A`,
+    headers: {
+      Authorization: 'Bearer ' + process.env.apikey,
+    },
+  }
 
-      res.render('design-system/dfe-frontend/index.html', {
-        version,
-        lastUpdatedv,
-      })
+  var services = {
+    method: 'get',
+    url: `${process.env.cmsurl}api/services?sort=Title&populate=%2A`,
+    headers: {
+      Authorization: 'Bearer ' + process.env.apikey,
+    },
+  }
+
+  var posts = {
+    method: 'get',
+    url: `${process.env.cmsurl}api/posts?sort=Publication_date%3Adesc&pagination[limit]=5&populate=%2A`,
+    headers: {
+      Authorization: 'Bearer ' + process.env.apikey,
+    },
+  }
+
+  var tags = {
+    method: 'get',
+    url: `${process.env.cmsurl}api/tags?sort=Tag&populate=%2A`,
+    headers: {
+      Authorization: 'Bearer ' + process.env.apikey,
+    },
+  }
+
+  axios(config)
+    .then(function (response) {
+      var teams = response.data
+
+      axios(services)
+        .then(function (responses) {
+          var services = responses.data
+
+          axios(posts)
+            .then(function (response) {
+              var posts = response.data
+
+              axios(tags)
+                .then(function (response) {
+                  var tags = response.data
+
+                  res.render('index', { teams, services, posts, tags })
+                })
+                .catch(function (error) {
+                  console.log(error)
+                })
+            })
+            .catch(function (error) {
+              console.log(error)
+            })
+        })
+        .catch(function (error) {
+          console.log(error)
+        })
     })
-    .catch((error) => {
-      console.error(error)
+    .catch(function (error) {
+      console.log(error)
     })
 })
 
-app.get('/design-system/dfe-frontend/sass-documentation', function (
-  req,
-  res,
-  next,
-) {
-  const packageName = 'dfe-frontend-alpha'
-  let version = '-'
+app.get('/team/:id', function (req, res) {
+  var config = {
+    method: 'get',
+    url: `${process.env.cmsurl}api/teams?filters[slug][\$eq]=${req.params.id}&populate=%2A`,
+    headers: {
+      Authorization: 'Bearer ' + process.env.apikey,
+    },
+  }
 
-  axios
-    .get(`https://registry.npmjs.org/${packageName}`)
-    .then((response) => {
-      const version = response.data['dist-tags'].latest
-      const lastUpdatedv = new Date(response.data.time.modified).toISOString()
+  axios(config)
+    .then(function (response) {
+      var services = response.data
 
-      res.render('design-system/dfe-frontend/sass-documentation/index.html', {
-        version,
-        lastUpdatedv,
-      })
+      console.log(services)
+
+      res.render('team.html', { services })
     })
-    .catch((error) => {
-      console.error(error)
+    .catch(function (error) {
+      console.log(error)
     })
 })
+
+app.get('/tag/:id', function (req, res) {
+  var config = {
+    method: 'get',
+    url: `${process.env.cmsurl}api/posts?filters[tags][slug][\$eq]=${req.params.id}&populate=%2A`,
+    headers: {
+      Authorization: 'Bearer ' + process.env.apikey,
+    },
+  }
+
+  var tag = {
+    method: 'get',
+    url: `${process.env.cmsurl}api/tags?filters[slug][\$eq]=${req.params.id}&populate=%2A`,
+    headers: {
+      Authorization: 'Bearer ' + process.env.apikey,
+    },
+  }
+
+  var tags = {
+    method: 'get',
+    url: `${process.env.cmsurl}api/tags?sort=Tag&populate=%2A`,
+    headers: {
+      Authorization: 'Bearer ' + process.env.apikey,
+    },
+  }
+
+  //    url: `${process.env.cmsurl}api/posts?filters[slug][\$eq]=${req.params.post_slug}&[service][slug][\$eq]=${req.params.service_slug}&populate=%2A`,
+
+  axios(config)
+    .then(function (response) {
+      var posts = response.data
+
+      axios(tag)
+      .then(function (response) {
+        var tag = response.data
+      
+        axios(tags)
+        .then(function (response) {
+          var tags = response.data
+    
+          res.render('tags', { posts, tag, tags })
+        })
+        .catch(function (error) {
+          console.log(error)
+        })
+      })
+      .catch(function (error) {
+        console.log(error)
+      })
+
+    })
+    .catch(function (error) {
+      console.log(error)
+    })
+})
+
+
+
+app.get('/:service_slug/:post_slug', function (req, res) {
+  var config = {
+    method: 'get',
+    url: `${process.env.cmsurl}api/posts?filters[slug][\$eq]=${req.params.post_slug}&[service][slug][\$eq]=${req.params.service_slug}&populate=%2A`,
+    headers: {
+      Authorization: 'Bearer ' + process.env.apikey,
+    },
+  }
+
+  var service = {
+    method: 'get',
+    url: `${process.env.cmsurl}api/services?filters[slug][\$eq]=${req.params.service_slug}&populate=%2A`,
+    headers: {
+      Authorization: 'Bearer ' + process.env.apikey,
+    },
+  }
+
+  axios(config)
+    .then(function (response) {
+      var data = response.data
+
+      axios(service)
+        .then(function (responses) {
+          var services = responses.data
+
+          res.render('post.html', { data, services })
+        })
+        .catch(function (error) {
+          console.log(error)
+        })
+    })
+    .catch(function (error) {
+      console.log(error)
+    })
+})
+
+
+app.get('/:id', function (req, res) {
+  var config = {
+    method: 'get',
+    url: `${process.env.cmsurl}api/posts?filters[service][slug][\$eq]=${req.params.id}&sort=Publication_date%3Adesc&populate=%2A`,
+    headers: {
+      Authorization: 'Bearer ' + process.env.apikey,
+    },
+  }
+
+  var service = {
+    method: 'get',
+    url: `${process.env.cmsurl}api/services?filters[slug][\$eq]=${req.params.id}&populate=%2A`,
+    headers: {
+      Authorization: 'Bearer ' + process.env.apikey,
+    },
+  }
+
+  axios(config)
+    .then(function (response) {
+      var posts = response.data
+
+      axios(service)
+        .then(function (responses) {
+          var services = responses.data
+
+          res.render('service.html', { posts, services })
+        })
+        .catch(function (error) {
+          console.log(error)
+        })
+    })
+    .catch(function (error) {
+      console.log(error)
+    })
+})
+
+
+
+
+
+
 
 app.get(/\.html?$/i, function (req, res) {
   var path = req.path
@@ -225,14 +431,8 @@ matchRoutes = function (req, res, next) {
   renderPath(path, res, next)
 }
 
-// Start the server
 
-// // Run application on configured port
-// if (config.env === 'development') {
-//   app.listen(config.port - 50, () => {
-//   });
-// } else {
-//   app.listen(config.port);
-// }
 
-app.listen(config.port)
+
+
+app.listen(process.env.PORT || 3088)
