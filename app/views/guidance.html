@@ -1,6 +1,6 @@
 {% extends "layouts/content-with-sidenav.html" %}
 {% set pageName = "Guidance for design history users" %}
-{% set pageDescription = "How to use th%}
+{% set pageDescription = "How to use the design history content management system."%}
 
 {% block breadcrumb %}
 <div class="govuk-breadcrumbs">
@@ -13,39 +13,134 @@
 {% endblock %}
 
 {% block content %}
+{% markdown %}
+   The following guidance will help you to get a design history up and running for your team or service.
 
-    <h2>Why have a design history</h2>
+<div class="govuk-inset-text">
+ We use a content management system (CMS) for design histories published on this service. We aim to set you up within 1 working day.
+</div>
 
-    <p>A design history is a great way to document changes to a service over time. </p>
+- [Request access to the CMS](#request-access-to-the-cms)
+- [Set up your team page](#set-up-your-team-page)
+- [Set up your service](#set-up-your-service)
+- [Write your first post](#write-your-first-post)
+- [Additional guidance and support](#additional-guidance-and-support)
 
-    <p>You can publish design histories using our CMS which is maintaned and supported by the <a href="https://design.education.gov.uk/design-ops">Design Ops team</a>.</p>
+<hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
 
-    <h2>Request access</h2>
-    <p>Access can only be provided to people with an education.gov.uk email address.</p>
+## Request access to the CMS
 
-    <p>The Design Ops team will contact you within 2 working days with additonal information about how to access the Design History CMS service.</p>
+[Submit an access request](//start-design-history) to use the CMS.
 
-    <form method="post">
+You'll need to provide your name and email address. Only requests for access from education.gov.uk and digital.education.gov.uk addresses will be accepted.
 
-        <div class="govuk-form-group">
-            <label class="govuk-label" for="name">
-      What is your name
-    </label>
-            <input class="govuk-input govuk-!-width-one-half" id="name" name="name" type="text">
-        </div>
-        <div class="govuk-form-group">
-            <label class="govuk-label" for="email">
-      What is your email address
-    </label>
-            <input class="govuk-input govuk-!-width-one-half" id="email" name="email" type="text">
-        </div>
+We will generate a random password. You can change this to something more memorable in the CMS yourself, [find out how to change your password](#change-your-password).
 
-        <button class="govuk-button" data-module="govuk-button">
-  Send request
-</button>
+We aim to set up all users within 1 working day. Usually in a few hours.
 
-    </form>
+## Set up your team page
 
+<div class="govuk-inset-text">
+ Teams are used to group multiple services together.
+</div>
+
+Sign into the CMS.
+
+From the side navigation menu, select **Content Manager** and then choose **Team**. 
+
+If your team doesn't exist, you can create a new one. Click the button named **Create new entry**.
+
+On the create an entry page, complete the **Title** of the team, give it a **Description**.
+
+When you are happy with the title, in the **Slug** field, click the Regenerate icon to ensure the slug is generated.
+
+Click the **Save** button.
+
+Your team will remain in draft until you click the **Publish** button.
+
+## Set up your service
+
+<div class="govuk-inset-text">
+ Services are used to group posts together. Multiple services can exist under a Team.
+</div>
+
+Sign into the CMS.
+
+From the side navigation menu, select **Content Manager** and then choose **Service**. 
+
+If your service doesn't exist, you can create a new one. Click the button named **Create new entry**.
+
+On the create an entry page, complete the **Title** of the service, give it a **Description**.
+
+When you are happy with the title, in the **Slug** field, click the Regenerate icon to ensure the slug is generated.
+
+If your service and posts under the service need to be protected with a password, enter one into the **Password** field. There are no restrictions on what this can be. 
+
+If a password is set, any service, or post associated with the service, will require a password to access. 
+
+Click the **Save** button.
+
+Your service will remain in draft until you click the **Publish** button.
+
+## Create your media library folder
+
+Sign into the CMS.
+
+From the side navigation menu, select **Media Library**
+
+If your service does not have a folder, click the **Add new folder** button and name your folder the same as your service
+
+You can then save all images relating to your service and posts into this folder. 
+
+Additionally, you can have child folders in your service folder for each post - It's up to you if you if you do this, but it's recommended.
+
+## Write your first post
+
+<div class="govuk-inset-text">
+ Posts are grouped by service.
+</div>
+
+
+
+Sign into the CMS.
+
+From the side navigation menu, select **Content Manager** and then choose **Post**. 
+
+If your post doesn't exist, you can create a new one. Click the button named **Create new entry**.
+
+On the create an entry page, complete the **Title** of the post, type a **Lede**, (this is used for the meta description and introduction to the post). Type our your post in the **Body** field using Markdown.
+
+When you are happy with the title, in the **Slug** field, click the Regenerate icon to ensure the slug is generated.
+
+Select a **Publication date**, this can be any date. 
+
+Click the **Save** button.
+
+Your post will remain in draft until you click the **Publish** button.
+
+<hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+
+## Additional guidance and support
+
+### Change your password
+
+Passwords must contain 1 uppercase letter, 1 or more numbers and be longer than 8 characters in total.
+
+If you want to change your password, sign into the CMS using your email address and current password.
+
+On the bottom left of the admin screen, where your name is displayed, click this and choose Profile.
+
+On the profile page, you need to enter your current password, and your new password, and confirm your new password. 
+
+Click the save button.
+
+### If you can't remember your password
+
+Do not use the "Reset your password" link on the sign in page, we have disabled this functionality.
+
+Send an email to [design.ops@education.gov.uk](mailto:design.ops@education.gov.uk) and we will reset your password.
+
+{% endmarkdown %}
 {% endblock %}
 
 {% block sideContent %}{% endblock %}
