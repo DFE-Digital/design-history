@@ -37,6 +37,8 @@ var nunjuckEnv = nunjucks.configure(
 nunjuckEnv.addFilter('date', dateFilter)
 markdown.register(nunjuckEnv, marked.parse)
 
+nunjuckEnv.addFilter('truncateAtFullStop', truncateAtFullStop);
+
 // Set up static file serving for the app's assets
 app.use('/assets', express.static('public/assets'))
 
@@ -327,7 +329,7 @@ app.get('/:service_slug/:post_slug', function (req, res) {
 app.get('/:id', function (req, res) {
   var config = {
     method: 'get',
-    url: `${process.env.cmsurl}api/posts?filters[service][slug][\$eq]=${req.params.id}&sort=Publication_date%3Adesc&populate=%2A`,
+    url: `${process.env.cmsurl}api/posts?filters[service][slug][\$eq]=${req.params.id}&pagination[start]=0&pagination[limit]=100&sort=Publication_date%3Adesc&populate=%2A`,
     headers: {
       Authorization: 'Bearer ' + process.env.apikey,
     },
@@ -432,7 +434,13 @@ matchRoutes = function (req, res, next) {
 }
 
 
-
+function truncateAtFullStop(inputString) {
+  const fullStopIndex = inputString.indexOf('.');
+  if (fullStopIndex === -1) {
+    return inputString;
+  }
+  return inputString.substring(0, fullStopIndex + 1);
+}
 
 
 app.listen(process.env.PORT || 3088)

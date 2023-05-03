@@ -1415,7 +1415,7 @@ input[type=submit].dfe-a-button {
   justify-content: space-between;
   min-height: 90px;
 
-  .dfe-card-link--header {
+  .dfe-card-link--header, p {
     color: $color_dfe-white;
 
     &:focus {

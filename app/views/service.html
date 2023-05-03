@@ -35,16 +35,16 @@
                 <h2 class="govuk-heading-m">
                   <a class="govuk-link govuk-link--no-visited-state dfe-card-link--header" href="/{{services.data[0].attributes.Slug}}/{{post.attributes.Slug}}">{{post.attributes.Title}}</a>
                 </h2>
-              </div>
-            </div>
-
-            <div class="dfe-card-container">
-              <p>{{post.attributxes.Lede}}</p>
-              <p class="govuk-body-s">Published: {% if post.attributes.Publication_date %}
+  <p class="govuk-body-s">Published: {% if post.attributes.Publication_date %}
                                 {{ post.attributes.Publication_date | date('D MMMM YYYY')}}
                             {% else %}
                                 {{ post.attributes.publishedAt | date('D MMMM YYYY')}}
                             {% endif %}</p>
+              </div>
+            </div>
+
+            <div class="dfe-card-container">
+              <p>{{post.attributes.Lede |truncateAtFullStop}}</p>             
             </div>
           </div>
 
