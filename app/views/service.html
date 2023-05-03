@@ -1,4 +1,4 @@
-{% extends "layouts/content-with-sidenav.html" %}
+{% extends "layouts/full.html" %}
 
 {% set pageName = services
     .data[0]
@@ -21,7 +21,7 @@
 
 
 {% block content %}
-    <h2 class="govuk-heading-m">Post by this team</h2>
+    <h2 class="govuk-heading-m">Posts by this team</h2>
 
     {% if services %}
         <div class="dfe-grid-container dfe-grid-container--wider">
@@ -56,5 +56,4 @@
     {% endif %}
 {% endblock %}
 
-{% block sideContent %}{% endblock %}
 
