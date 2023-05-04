@@ -34,8 +34,6 @@
           : 'js-enabled');
       </script>
 
-     
-
       {% include 'layouts/_cookiebanner.html'%}
 
       <a href="#main-content" class="govuk-skip-link" data-module="govuk-skip-link">Skip to main content</a>
@@ -48,22 +46,22 @@
         {% include 'layouts/_header.html'%}
 
       {% endblock %}
+   
+      {% block hero %}
+      {% endblock %}
 
-      {% block hero %}{% endblock %}
-
-      <div class="govuk-width-container">
-
+ 
+ <div class="dfe-width-container">
         {% block beforeContent%}{% endblock %}
 
         {% block main %}
-          <div class="govuk-width-container app-width-container">
             <main class="govuk-main-wrapper " id="main-content" role="main">
               {% block content %}{% endblock %}
             </main>
-          </div>
+     
         {% endblock %}
 
-      </div>
+     </div>
 
       {% block footer %}
         {% include 'layouts/_footer.html'%}
