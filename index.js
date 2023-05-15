@@ -50,7 +50,7 @@ app.get('/sitemap.xml', (_, res) => {
 
 
 app.get('/search', async (req, res) => {
-  const searchTerm = req.query['search-field'] || ''
+  const searchTerm = req.query['searchterm'] || ''
   let results = [];
 
   if (searchTerm) { // Only query Strapi if a search term was provided
