@@ -18,14 +18,14 @@ app.use(bodyParser.urlencoded({ extended: true }))
 
 app.set('view engine', 'html')
 
-app.locals.serviceName = 'Design Histories'
+app.locals.serviceName = 'Design histories'
 app.locals.BASE_URL = process.env.BASE_URL;
 
 // Set up Nunjucks as the template engine
 var nunjuckEnv = nunjucks.configure(
   [
     'app/views',
-    'node_modules/govuk-frontend',
+    'node_modules/govuk-frontend/dist/',
     'node_modules/dfe-frontend-alpha/packages/components',
   ],
   {
@@ -162,6 +162,98 @@ app.get('/', function (req, res) {
 
   var posts = {
     method: 'get',
+    url: `${process.env.cmsurl}api/posts?sort=Publication_date%3Adesc&pagination[limit]=6&populate=%2A`,
+    headers: {
+      Authorization: 'Bearer ' + process.env.apikey,
+    },
+  }
+  var postsolder = {
+    method: 'get',
+    url: `${process.env.cmsurl}api/posts?sort=Publication_date%3Adesc&pagination[start]=7&pagination[limit]=6&populate=%2A`,
+    headers: {
+      Authorization: 'Bearer ' + process.env.apikey,
+    },
+  }
+
+
+
+  var tags = {
+    method: 'get',
+    url: `${process.env.cmsurl}api/tags?sort=Tag&populate=%2A`,
+    headers: {
+      Authorization: 'Bearer ' + process.env.apikey,
+    },
+  }
+
+  axios(config)
+    .then(function (response) {
+      var teams = response.data
+
+      axios(services)
+        .then(function (responses) {
+          var services = responses.data
+
+          axios(posts)
+            .then(function (response) {
+              var posts = response.data
+
+              axios(tags)
+                .then(function (response) {
+                  var tags = response.data
+
+
+                  axios(postsolder)
+                  .then(function (response) {
+                    var postsolder = response.data
+  
+  
+  
+                    res.render('index', { teams, services, posts, tags, postsolder })
+  
+                    
+                  })
+                  .catch(function (error) {
+                    console.log(error)
+                  })
+
+
+                })
+                .catch(function (error) {
+                  console.log(error)
+                })
+            })
+            .catch(function (error) {
+              console.log(error)
+            })
+        })
+        .catch(function (error) {
+          console.log(error)
+        })
+    })
+    .catch(function (error) {
+      console.log(error)
+    })
+})
+
+app.get('/teams', function (req, res) {
+  var config = {
+    method: 'get',
+    url: `${process.env.cmsurl}api/teams?filters[Enabled][\$eq]=true&sort=Title&populate=%2A`,
+    headers: {
+      Authorization: 'Bearer ' + process.env.apikey,
+    },
+  }
+
+  var services = {
+    method: 'get',
+    url: `${process.env.cmsurl}api/services?sort=Title&populate=%2A`,
+    headers: {
+      Authorization: 'Bearer ' + process.env.apikey,
+    },
+  }
+
+  var posts = {
+    method: 'get',
     url: `${process.env.cmsurl}api/posts?sort=Publication_date%3Adesc&pagination[limit]=5&populate=%2A`,
     headers: {
       Authorization: 'Bearer ' + process.env.apikey,
@@ -192,7 +284,7 @@ app.get('/', function (req, res) {
                 .then(function (response) {
                   var tags = response.data
 
-                  res.render('index', { teams, services, posts, tags })
+                  res.render('teams', { teams, services, posts, tags })
                 })
                 .catch(function (error) {
                   console.log(error)

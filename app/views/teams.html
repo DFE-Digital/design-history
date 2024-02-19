@@ -1,0 +1,63 @@
+{% extends "layouts/homepage.html" %}
+
+{% set selectedNav = "Teams" %}
+{% set pageTitle = "Teams" %}
+{% set pageDescription = "Find design histories by team."%}
+
+{% block hero %}
+<section class="dfe-page-hero">
+  <div class="dfe-width-container ">
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds">
+        <h1 class="govuk-heading-xl">{{pageTitle}}</h1>
+        <p class="govuk-body-l">{{pageDescription}}</p>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
+
+{% block content %}
+<div class="dfe-width-container ">
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+      <h2 class="govuk-heading-l">Teams</h2>
+
+      <div class="dfe-grid-container">
+
+
+
+        {% for team in teams.data %}
+
+        <div class="dfe-card">
+          <div class="dfe-card-container">
+            <h2 class="govuk-heading-m">
+              <a href="team/{{team.attributes.Slug}}"
+                class="govuk-link govuk-link--no-visited-state dfe-card-link--header">{{team.attributes.Title}}</a>
+            </h2>
+            <p>{{team.attributes.Description}}</p>
+          </div>
+        </div>
+
+        {% endfor %}
+
+      </div>
+
+    </div>
+
+    <div class="govuk-grid-column-one-third">
+      <h2 class="govuk-heading-l">Posts by tag</h2>
+      {% for tag in tags.data %}
+      <a href="/tag/{{tag.attributes.Slug}}" class="dfe-dh-tag">{{tag.attributes.Tag}}</a>
+      {% endfor %}
+
+      <div class="dfe-panel govuk-!-margin-top-9">
+        <h2 class="govuk-heading-s">Start your own design history</h2>
+        <p>Help people understand changes to services and work in the open</p>
+        <a href="/start-design-history" class="cta-link">Get started</a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

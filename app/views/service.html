@@ -1,9 +1,9 @@
 {% extends "layouts/full.html" %}
 
 {% set pageName = services
-    .data[0]
-    .attributes
-    .Title + " posts" %}
+.data[0]
+.attributes
+.Title + " posts" %}
 {% set pageDescription = services.data[0].attributes.Description%}
 
 {% block breadcrumb %}
@@ -12,48 +12,39 @@
     <li class="govuk-breadcrumbs__list-item">
       <a class="govuk-breadcrumbs__link" href="/">Home</a>
     </li>
-  <li class="govuk-breadcrumbs__list-item">
-                <a class="govuk-breadcrumbs__link" href="/team/{{services.data[0].attributes.team.data.attributes.Slug}}">{{services.data[0].attributes.team.data.attributes.Title}}</a>
-            </li>
+    <li class="govuk-breadcrumbs__list-item">
+      <a class="govuk-breadcrumbs__link"
+        href="/team/{{services.data[0].attributes.team.data.attributes.Slug}}">{{services.data[0].attributes.team.data.attributes.Title}}</a>
+    </li>
   </ol>
 </div>
 {% endblock %}
 
 
 {% block content %}
-    <h2 class="govuk-heading-m">Posts by this team</h2>
+<h2 class="govuk-heading-m">Posts by this team</h2>
 
-    {% if services %}
-        <div class="dfe-grid-container dfe-grid-container--wider">
+{% if services %}
+<div class="dfe-grid-container dfe-grid-container--wider">
 
   {% for post in posts.data %}
 
-          <div class="dfe-card">
-              
-            <div class="dfe-card--text-header">
-              <div class="dfe-card--text-header-container">
-                <h2 class="govuk-heading-m">
-                  <a class="govuk-link govuk-link--no-visited-state dfe-card-link--header" href="/{{services.data[0].attributes.Slug}}/{{post.attributes.Slug}}">{{post.attributes.Title}}</a>
-                </h2>
-  <p class="govuk-body-s">Published: {% if post.attributes.Publication_date %}
-                                {{ post.attributes.Publication_date | date('D MMMM YYYY')}}
-                            {% else %}
-                                {{ post.attributes.publishedAt | date('D MMMM YYYY')}}
-                            {% endif %}</p>
-              </div>
-            </div>
-
-            <div class="dfe-card-container">
-              <p>{{post.attributes.Lede |truncateAtFullStop}}</p>             
-            </div>
-          </div>
+  <div class="dfe-card">
+    <div class="dfe-card-container">
+      <h2 class="govuk-heading-s">
+        <a href="/{{post.attributes.service.data.attributes.Slug}}/{{post.attributes.Slug}}"
+          class="govuk-link govuk-link--no-visited-state dfe-card-link--header">{{post.attributes.Title}}</a>
+      </h2>
+      <p class="govuk-body-s">{{post.attributes.Lede}}</p>
+      <p class="govuk-body-s">{{post.attributes.service.data.attributes.Title}}</p>
+      <p class="govuk-body-s govuk-!-margin-bottom-0">{{post.attributes.Publication_date | date('D MMMM YYYY')}}</p>
+    </div>
+  </div>
 
   {% endfor %}
 
-        </div>
-        {% else%}
-        <h2 class="govuk-heading-m">There are no posts for this service.</h2>
-    {% endif %}
+</div>
+{% else%}
+<h2 class="govuk-heading-m">There are no posts for this service.</h2>
+{% endif %}
 {% endblock %}
-
-

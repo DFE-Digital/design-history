@@ -1,20 +1,27 @@
- {{ header({
-    "showNav": "false",
-    "showSearch": "true",
-    "showUserName": "false",
-    "userName": "",
-    "userNameURL": "",
-    "selectedNav": selectedNav,
-    "logoPath": "assets/images",
-    "searchInputName": "searchterm",
-    "service": {
-      "name": serviceName
-    },
-    "primaryLinks": [
-      {
-        "url"  : "/",
-        "label" : "Home"
-      }
-    ]
-  })
+{{ header({
+"showNav": "true",
+"showSearch": "true",
+"showUserName": "false",
+"userName": "",
+"userNameURL": "",
+"selectedNav": selectedNav,
+"logoPath": "assets/images",
+"searchInputName": "searchterm",
+"service": {
+"name": serviceName
+},
+"primaryLinks": [
+{
+"url" : "/",
+"label" : "Home"
+}, {
+"url" : "/teams",
+"label" : "Teams"
+},{
+"url" : "/start-design-history",
+"label" : "Start a design history"
+}
+
+]
+})
 }}

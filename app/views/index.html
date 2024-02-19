@@ -3,67 +3,78 @@
 
 
 {% set selectedNav = "Home" %}
-{% set pageTitle = "Department for Education Design History service" %}
-{% set pageDescription = "Read about the work teams across the Department for Education are delivering and how services change over time."%}
+{% set pageTitle = "Design histories" %}
+{% set pageDescription = "We work in the open across the Department for Education. Find out how our services change over
+time through our teams design histories."%}
 
 {% block hero %}
-  <section class="dfe-hero">
-    <div class="dfe-width-container ">
-      <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-
-          <h1 class="govuk-heading-xl">Design Histories</h1>
-          <p class="govuk-body-l">Documenting changes to services over time from teams in the Department for Education.</p>
-        </div>
+<section class="dfe-page-hero">
+  <div class="dfe-width-container ">
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds">
+        <h1 class="govuk-heading-xl">{{pageTitle}}</h1>
+        <p class="govuk-body-l">{{pageDescription}}</p>
       </div>
     </div>
-
-  </section>
-
+  </div>
+</section>
 {% endblock %}
 
 {% block content %}
-
+<div class="dfe-width-container ">
   <div class="govuk-grid-row">
-    <div class="govuk-grid-column-two-thirds">
+    <div class="govuk-grid-column-full">
 
-      <h2 class="govuk-heading-l">Teams</h2>
 
-      <div class="dfe-grid-container">
+      <h2 class="govuk-heading-l">Recent posts</h2>
 
-        {% for team in teams.data %}
+      <div class="dfe-grid-container govuk-!-margin-top-5">
 
-          <div class="dfe-card">
-            <div class="dfe-card--text-header">
-              <div class="dfe-card--text-header-container">
-                <h2 class="govuk-heading-m">
-                  <a class="govuk-link govuk-link--no-visited-state dfe-card-link--header" href="/team/{{team.attributes.Slug}}">{{team.attributes.Title}}</a>
-                </h2>
-              </div>
-            </div>
+        {% for post in posts.data %}
 
-            <div class="dfe-card-container">
-              <p>{{team.attributes.Description}}</p>
-            </div>
+        <div class="dfe-card">
+          <div class="dfe-card-container">
+            <h2 class="govuk-heading-s">
+              <a href="/{{post.attributes.service.data.attributes.Slug}}/{{post.attributes.Slug}}"
+                class="govuk-link govuk-link--no-visited-state dfe-card-link--header">{{post.attributes.Title}}</a>
+            </h2>
+            <p class="govuk-body-s">{{post.attributes.Lede}}</p>
+            <p class="govuk-body-s">{{post.attributes.service.data.attributes.Title}}</p>
+            <p class="govuk-body-s govuk-!-margin-bottom-0">{{post.attributes.Publication_date | date('D MMMM YYYY')}}</p>
           </div>
+        </div>
+
         {% endfor %}
 
       </div>
-
-    </div>
-
-    <div class="govuk-grid-column-one-third">
-      <h2 class="govuk-heading-l">Posts by tag</h2>
-      {% for tag in tags.data %}
-        <a href="/tag/{{tag.attributes.Slug}}" class="dfe-dh-tag">{{tag.attributes.Tag}}</a>
-      {% endfor %}
-
-      <div class="cta-banner">
-        <h2 class="govuk-heading-s">Start your own design history</h2>
-        <p>Help people understand changes to services and work in the open</p>
-        <a href="/start-design-history" class="cta-link">Get started</a>
-        </div>
     </div>
   </div>
 
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <h2 class="govuk-heading-m">Older posts</h2>
+      {% for post in postsolder.data %}
+      <p class=" govuk-!-margin-bottom-2">
+        <a href="/{{post.attributes.service.data.attributes.Slug}}/{{post.attributes.Slug}}" target="_blank"
+          class="govuk-link govuk-link--no-visited-state govuk-!-margin-bottom-2 govuk-heading-s">{{post.attributes.Title}}</a>
+      </p>
+      <p class="govuk-body govuk-body-s">For {{post.attributes.service.data.attributes.Title}} on
+        {{post.attributes.Publication_date | date('D MMMM YYYY')}}</p>
+      <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+      {% endfor %}
+    </div>
+
+    <div class="govuk-grid-column-one-third">
+      <h2 class="govuk-heading-m">Posts by tag</h2>
+      {% for tag in tags.data %}
+      <a href="/tag/{{tag.attributes.Slug}}" class="dfe-dh-tag">{{tag.attributes.Tag}}</a>
+      {% endfor %}
+      <div class="dfe-panel govuk-!-margin-top-9">
+        <h2 class="govuk-heading-s">Start your own design history</h2>
+        <p>Help people understand changes to services and work in the open</p>
+        <a href="/start-design-history" class="cta-link">Get started</a>
+      </div>
+    </div>
+  </div>
+</div>
 {% endblock %}

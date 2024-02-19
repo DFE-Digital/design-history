@@ -1,9 +1,9 @@
 {% extends "layouts/full.html" %}
 
 {% set pageName = services
-  .data[0]
-  .attributes
-  .Title %}
+.data[0]
+.attributes
+.Title %}
 {% set pageDescription = services.data[0].attributes.Description%}
 
 
@@ -20,59 +20,47 @@
 
 
 {% block content %}
-     {% if services
-    .data[0]
-    .attributes
-    .services
-    .data.length %}
-    <h2 class="govuk-heading-m">Services by this team</h2>
+{% if services
+.data[0]
+.attributes
+.services
+.data.length %}
+<h2 class="govuk-heading-m">Services by this team</h2>
 
 
- <div class="dfe-grid-container dfe-grid-container--wider">
+<div class="dfe-grid-container">
 
-        {% for service in services
-        .data[0]
-        .attributes
-        .services
-        .data %}
-        {% if not service.attributes.Password %}
-
-          <div class="dfe-card">
-            <div class="dfe-card--text-header">
-              <div class="dfe-card--text-header-container">
-                <h2 class="govuk-heading-m">
-                  <a class="govuk-link govuk-link--no-visited-state dfe-card-link--header" href="/{{service.attributes.Slug}}">{{service.attributes.Title}}</a>
-                </h2>
-              </div>
-            </div>
-
-            <div class="dfe-card-container">
-              <p>{{service.attributes.Description}}</p>
-            </div>
-          </div>
-
-        {% endif %}
-        {% endfor %}
-
-      </div>
+  {% for service in services
+  .data[0]
+  .attributes
+  .services
+  .data %}
+  {% if not service.attributes.Password %}
 
 
 
+  <div class="dfe-card">
+    <div class="dfe-card-container">
+      <h2 class="govuk-heading-m">
+        <a href="/{{service.attributes.Slug}}"
+          class="govuk-link govuk-link--no-visited-state dfe-card-link--header">{{service.attributes.Title}}</a>
+      </h2>
+      <p>{{service.attributes.Description}}</p>
+    </div>
+  </div>
 
 
-  
-    {% else%}
-    <h2 class="govuk-heading-m">There are no services for this team yet.</h2>
   {% endif %}
+  {% endfor %}
+
+</div>
+
+
+
+
+
+
+{% else%}
+<h2 class="govuk-heading-m">There are no services for this team yet.</h2>
+{% endif %}
 {% endblock %}
-
-
-
-
-
-
-
-
-
-
-
