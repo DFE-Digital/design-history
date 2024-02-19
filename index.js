@@ -48,6 +48,10 @@ app.get('/sitemap.xml', (_, res) => {
   res.render('sitemap.xml');
 });
 
+app.get('/accessibility-statement', (_, res) => {
+  res.render('accessibility-statement');
+});
+
 
 app.get('/search', async (req, res) => {
   const searchTerm = req.query['searchterm'] || ''
