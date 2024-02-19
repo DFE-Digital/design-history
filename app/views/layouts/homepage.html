@@ -8,9 +8,7 @@
 <head>
   <meta charset="utf-8">
   <title>
-    {% if seoPageName %}{{seoPageName}}
-    {% elseif pageName %}{{pageName}}{%endif%} - {% if parentSection === "ncs-design-system"%}National Careers Service
-    {% endif%}Design Manual - Department for Education</title>
+    {%- if seoPageName %}{{seoPageName}} {% elseif pageName %}{{pageName}}{%endif%} - Design histories</title>
   <meta name="description"
     content="{% if seoPageDescription %}{{seoPageDescription}}{% elseif pageName %}{{pageDescription}}{%endif%}">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
