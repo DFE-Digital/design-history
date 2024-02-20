@@ -38,9 +38,12 @@ time through our teams design histories."%}
               <a href="/{{post.attributes.service.data.attributes.Slug}}/{{post.attributes.Slug}}"
                 class="govuk-link govuk-link--no-visited-state dfe-card-link--header">{{post.attributes.Title}}</a>
             </h2>
-            <p class="govuk-body-s">{{post.attributes.Lede}}</p>
-            <p class="govuk-body-s">{{post.attributes.service.data.attributes.Title}}</p>
-            <p class="govuk-body-s govuk-!-margin-bottom-0">{{post.attributes.Publication_date | date('D MMMM YYYY')}}</p>
+            <p class="govuk-body-s">{{post.attributes.Lede | truncate(150)}}</p>
+            <div class="dfe-card-meta">
+              <p class="govuk-body-s">{{post.attributes.service.data.attributes.Title}}</p>
+              <p class="govuk-body-s govuk-!-margin-bottom-0">{{post.attributes.Publication_date | date('D MMMM YYYY')}}
+              </p>
+            </div>
           </div>
         </div>
 
@@ -69,7 +72,7 @@ time through our teams design histories."%}
       {% for tag in tags.data %}
       <a href="/tag/{{tag.attributes.Slug}}" class="dfe-dh-tag">{{tag.attributes.Tag}}</a>
       {% endfor %}
-      <div class="dfe-panel govuk-!-margin-top-9">
+      <div class="dfe-panel govuk-!-margin-top-5">
         <h2 class="govuk-heading-s">Start your own design history</h2>
         <p>Help people understand changes to services and work in the open</p>
         <a href="/start-design-history" class="cta-link">Get started</a>

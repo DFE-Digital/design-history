@@ -20,17 +20,19 @@
     /* Distributes space inside the card */
     box-sizing: border-box;
     /* Ensures padding and border are included in the width */
-    background-color:  govuk-colour("white");
+    background-color: govuk-colour("white");
     border: 1px solid $govuk-border-colour;
     padding: govuk-spacing(6);
     flex: 1 0 auto;
     /* Adds flexibility and ensures cards can grow to fill space */
 
-    h2, h3{
+    h2,
+    h3 {
         margin-bottom: govuk-spacing(2);
     }
 
-    h2 a, h3 a{
+    h2 a,
+    h3 a {
         text-decoration: none;
     }
 
@@ -104,15 +106,19 @@
 }
 
 .dfe-grid-container--hero-grid {
-        display: grid;
-        grid-template-columns: 2fr 1fr 1fr; /* First column is twice as wide as the others */
-        grid-auto-rows: minmax(100px, auto); /* Adjust the minimum row height as needed */
-        gap: 30px; /* Adjust the gap between the cards */
-        margin-bottom: 30px;
-    }
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    /* First column is twice as wide as the others */
+    grid-auto-rows: minmax(100px, auto);
+    /* Adjust the minimum row height as needed */
+    gap: 30px;
+    /* Adjust the gap between the cards */
+    margin-bottom: 30px;
+}
 
-.dfe-grid-container--hero-grid  > .dfe-card:first-child {
-    grid-row: span 2; /* Makes the first card span 2 rows */
+.dfe-grid-container--hero-grid>.dfe-card:first-child {
+    grid-row: span 2;
+    /* Makes the first card span 2 rows */
     max-width: 800px;
 }
 
@@ -120,7 +126,7 @@
     position: relative;
     display: flex;
     flex-direction: column;
-    background-color:  govuk-colour("white");
+    background-color: govuk-colour("white");
     border: 1px solid $govuk-border-colour;
     max-width: 400px;
 
@@ -166,15 +172,20 @@
     flex-grow: 1;
     flex-direction: column;
 
-    // Last element push to the bottom
-    :last-child{
+
+    .dfe-card-meta {
         margin-top: auto;
+
+        p {
+            margin-bottom: 0px;
+        }
+
+        p:last-child {
+            margin-top: 5px;
+        }
     }
 
-    // except when it's just a linkable header and p - don't margin:auto.
-    h2+p:last-child, h3+p:last-child{
-        margin-top:0px;
-    }
+
 
 }
 
@@ -219,4 +230,3 @@
     right: 0;
     bottom: 0;
 }
-
