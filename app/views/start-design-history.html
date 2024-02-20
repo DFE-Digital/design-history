@@ -17,44 +17,54 @@ changes over time."%}
 
 {% block content %}
 
-<h2>Why have a design history</h2>
 
-<p>A design history is a great way to document changes to a service over time. </p>
+<div class="dfe-width-container ">
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
 
-<p>You can publish design histories using our CMS which is maintaned and supported by the <a
-    href="https://design.education.gov.uk/design-ops">Design Ops team</a>.</p>
+      <h2>Why have a design history</h2>
 
-<h2>Request access</h2>
-<p>Access can only be provided to people with an education.gov.uk email address.</p>
+      <p>A design history is a great way to document changes to a service over time. </p>
 
-<p>The Design Ops team will contact you within 2 working days with additonal information about how to access the Design
-  History CMS service.</p>
+      <p>You can publish design histories using our CMS which is maintaned and supported by the <a
+          href="https://design.education.gov.uk/design-ops">Design Ops team</a>.</p>
 
-<form method="post">
+      <h2>Request access</h2>
+      <p>Access can only be provided to people with an education.gov.uk email address.</p>
 
-  <div class="govuk-form-group">
-    <label class="govuk-label" for="name">
-      What is your name
-    </label>
-    <input class="govuk-input govuk-!-width-one-half" id="name" name="name" type="text">
+      <p>The Design Ops team will contact you within 2 working days with additonal information about how to access the
+        Design
+        History CMS service.</p>
+
+      <form method="post">
+
+        <div class="govuk-form-group">
+          <label class="govuk-label" for="name">
+            What is your name
+          </label>
+          <input class="govuk-input govuk-!-width-one-half" id="name" name="name" type="text">
+        </div>
+        <div class="govuk-form-group">
+          <label class="govuk-label" for="email">
+            What is your email address
+          </label>
+          <input class="govuk-input govuk-!-width-one-half" id="email" name="email" type="text">
+        </div>
+
+        <button class="govuk-button" data-module="govuk-button">
+          Send request
+        </button>
+
+      </form>
+
+      <h2>Guidance for using the CMS</h2>
+
+      <p>We have put together <a href="/guidance">step by step guidance</a> for starting a design history, managing
+        images and
+        media and writing posts.</p>
+    </div>
   </div>
-  <div class="govuk-form-group">
-    <label class="govuk-label" for="email">
-      What is your email address
-    </label>
-    <input class="govuk-input govuk-!-width-one-half" id="email" name="email" type="text">
-  </div>
-
-  <button class="govuk-button" data-module="govuk-button">
-    Send request
-  </button>
-
-</form>
-
-<h2>Guidance for using the CMS</h2>
-
-<p>We have put together <a href="/guidance">step by step guidance</a> for starting a design history, managing images and
-  media and writing posts.</p>
+</div>
 
 {% endblock %}
 
