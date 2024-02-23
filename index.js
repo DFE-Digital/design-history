@@ -7,6 +7,7 @@ var markdown = require('nunjucks-markdown')
 var marked = require('marked')
 const bodyParser = require('body-parser')
 var NotifyClient = require('notifications-node-client').NotifyClient
+const session = require('express-session')
 
 require('dotenv').config()
 const app = express()
@@ -33,6 +34,17 @@ var nunjuckEnv = nunjucks.configure(
     express: app,
   },
 )
+
+app.set('trust proxy', 1) // trust first proxy
+app.use(session({
+  secret: process.env.sessionKey,
+  resave: false,
+  saveUninitialized: true,
+  cookie: {
+    secure: false, 
+    maxAge: 1200000 // 20 minutes
+  }
+}))
 
 nunjuckEnv.addFilter('date', dateFilter)
 markdown.register(nunjuckEnv, marked.parse)
@@ -68,23 +80,23 @@ app.get('/search', async (req, res) => {
           Authorization: 'Bearer ' + process.env.apikey,
         },
       }
-  
-        axios(posts)
-          .then(function (responses) {
-            var results = responses.data
-  
-            res.render('search.html', { searchTerm, results })
-          })
-          .catch(function (error) {
-            console.log(error)
-          })
-      
-    
 
-    } catch(err){
+      axios(posts)
+        .then(function (responses) {
+          var results = responses.data
+
+          res.render('search.html', { searchTerm, results })
+        })
+        .catch(function (error) {
+          console.log(error)
+        })
+
+
+
+    } catch (err) {
       console.log(err)
-        // Render the search results template with the matching results
-  res.render('search.html', { searchTerm, results });
+      // Render the search results template with the matching results
+      res.render('search.html', { searchTerm, results });
     }
   }
 
@@ -95,7 +107,7 @@ app.get('/start-design-history', (req, res) => {
   return res.render('start-design-history')
 })
 
-app.get('/guidance', (req, res) => { 
+app.get('/guidance', (req, res) => {
   return res.render('guidance')
 })
 
@@ -113,14 +125,14 @@ app.post('/start-design-history', (req, res) => {
         name: name,
       },
     })
-    .then((response) => {})
+    .then((response) => { })
     .catch((err) => console.log(err))
 
   return res.redirect('/requested')
 })
 
 app.get('/requested', (req, res) => {
- 
+
   return res.render('requested.html')
 })
 
@@ -140,7 +152,7 @@ app.post('/submit-feedback', (req, res) => {
         service: "Design Histories"
       },
     })
-    .then((response) => {})
+    .then((response) => { })
     .catch((err) => console.log(err))
 
   return res.sendStatus(200)
@@ -207,18 +219,18 @@ app.get('/', function (req, res) {
 
 
                   axios(postsolder)
-                  .then(function (response) {
-                    var postsolder = response.data
-  
-  
-  
-                    res.render('index', { teams, services, posts, tags, postsolder })
-  
-                    
-                  })
-                  .catch(function (error) {
-                    console.log(error)
-                  })
+                    .then(function (response) {
+                      var postsolder = response.data
+
+
+
+                      res.render('index', { teams, services, posts, tags, postsolder })
+
+
+                    })
+                    .catch(function (error) {
+                      console.log(error)
+                    })
 
 
                 })
@@ -238,6 +250,78 @@ app.get('/', function (req, res) {
       console.log(error)
     })
 })
+
+app.post('/password', function (req, res) {
+
+  const { password, slug, post } = req.body
+
+  var config = {
+    method: 'get',
+    url: `${process.env.cmsurl}api/posts?filters[slug][\$eq]=${post}&[service][slug][\$eq]=${slug}&populate=%2A`,
+    headers: {
+      Authorization: 'Bearer ' + process.env.apikey,
+    },
+  }
+
+  var service = {
+    method: 'get',
+    url: `${process.env.cmsurl}api/services?filters[slug][\$eq]=${slug}&populate=%2A`,
+    headers: {
+      Authorization: 'Bearer ' + process.env.apikey,
+    },
+  }
+  axios(config)
+    .then(function (responses) {
+      var data = responses.data
+
+      axios(service)
+        .then(function (responses) {
+          var services = responses.data
+
+          console.log(services.data[0].attributes.Password)
+
+          let errors = {}
+
+          if (password === '') {
+            errors = {
+              message: 'Enter the password',
+              field: 'password'
+            }
+
+            return res.render('password.html', { data, services, errors })
+          }
+          if (services.data[0].attributes.Password !== password) {
+
+            errors = {
+              message: 'The password you entered is incorrect',
+              field: 'password'
+            }
+
+            return res.render('password.html', { data, services, errors })
+          }
+
+
+          if (services.data[0].attributes.Password === password) {
+
+            // Set a session variable to remember the user has entered the correct password
+
+            if (req.session.data === undefined) {
+              req.session.data = {}
+            }
+
+            req.session.data.hasValidPassword = true
+
+            console.log('setting password')
+
+            return res.redirect(`/${slug}/${post}`)
+          }
+
+        })
+
+    })
+
+})
+
 
 app.get('/teams', function (req, res) {
   var config = {
@@ -361,22 +445,22 @@ app.get('/tag/:id', function (req, res) {
       var posts = response.data
 
       axios(tag)
-      .then(function (response) {
-        var tag = response.data
-      
-        axios(tags)
         .then(function (response) {
-          var tags = response.data
-    
-          res.render('tags', { posts, tag, tags })
+          var tag = response.data
+
+          axios(tags)
+            .then(function (response) {
+              var tags = response.data
+
+              res.render('tags', { posts, tag, tags })
+            })
+            .catch(function (error) {
+              console.log(error)
+            })
         })
         .catch(function (error) {
           console.log(error)
         })
-      })
-      .catch(function (error) {
-        console.log(error)
-      })
 
     })
     .catch(function (error) {
@@ -411,7 +495,23 @@ app.get('/:service_slug/:post_slug', function (req, res) {
         .then(function (responses) {
           var services = responses.data
 
-          res.render('post.html', { data, services })
+          console.log('Get post')
+
+          if (data.data[0].attributes.service.data.Password !== '' && data.data[0].attributes.service.data.Password !== null) {
+
+            console.log('Has password')
+
+            console.log(req.session.data)
+
+            if (req.session.data === undefined || req.session.data.hasValidPassword !== true) {
+              return res.render('password.html', { data, services })
+            } else if (req.session.data.hasValidPassword !== true) {
+              return res.render('password.html', { data, services })
+            }
+
+          }
+
+          return res.render('post.html', { data, services })
         })
         .catch(function (error) {
           console.log(error)
@@ -447,6 +547,9 @@ app.get('/:id', function (req, res) {
       axios(service)
         .then(function (responses) {
           var services = responses.data
+
+          console.log(posts)
+
 
           res.render('service.html', { posts, services })
         })

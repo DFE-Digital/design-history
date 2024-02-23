@@ -24,6 +24,7 @@
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "express-recaptcha": "^5.1.0",
+    "express-session": "^1.18.0",
     "fs": "^0.0.1-security",
     "govuk-frontend": "^5.1.0",
     "gulp-nunjucks-render": "^2.2.3",
