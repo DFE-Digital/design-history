@@ -1,8 +1,8 @@
-{% extends "layouts/homepage.html" %}
+{% extends "layouts/content-with-sidenav-left.html" %}
 {% set pageName = "Start a design history" %}
 {% set pageDescription = "Start a design history for a Department for Education service and start sharing how a service
 changes over time."%}
-{% set selectedNav = "Start a design history" %}
+{% set selectedNav = "Guidance" %}
 
 
 {% block breadcrumb %}
@@ -13,6 +13,24 @@ changes over time."%}
     </li>
   </ol>
 </div>
+{% endblock %}
+
+{% block sideContent %}
+
+<nav class="dfe-vertical-nav">
+
+
+  <ul class="dfe-vertical-nav__section">
+
+    <li class="dfe-vertical-nav__section-item">
+      <a class="dfe-vertical-nav__link" href="/guidance">Guidance for design history users</a>
+    </li>
+    <li class="dfe-vertical-nav__section-item  dfe-vertical-nav__section-item--current">
+      <a class="dfe-vertical-nav__link" href="/start-design-history">Start a design history</a>
+    </li>
+  </ul>
+</nav>
+
 {% endblock %}
 
 {% block content %}
@@ -68,4 +86,3 @@ changes over time."%}
 
 {% endblock %}
 
-{% block sideContent %}{% endblock %}
