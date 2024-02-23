@@ -2566,6 +2566,25 @@ a.dfe-dh-tag:focus {
   text-decoration: none
 }
 
-.post img{
+.post img {
   max-width: 100%;
+  border: 1px solid #b1b4b6;
+}
+
+
+blockquote {
+  margin-left:0px;
+  margin-top: 30px;
+  margin-bottom: 30px;
+  font-weight: 400;
+  font-size: 1rem;
+  line-height: 1.25;
+  padding: 15px;
+  clear: both;
+  border-left: 10px solid #b1b4b6;
+}
+
+ol {
+  list-style-type: decimal;
+  margin-left: 20px;
 }
