@@ -497,7 +497,8 @@ app.get('/:service_slug/:post_slug', function (req, res) {
 
           console.log('Get post')
 
-          if (data.data[0].attributes.service.data.Password !== '' && data.data[0].attributes.service.data.Password !== null) {
+
+          if (data.data[0].attributes.service.data.Password !== undefined) {
 
             console.log('Has password')
 
