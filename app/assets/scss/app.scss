@@ -2588,3 +2588,34 @@ ol {
   list-style-type: decimal;
   margin-left: 20px;
 }
+
+
+.social-share ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.social-share li {
+  display: inline-block;
+  margin-right: 10px;
+}
+
+.social-share a {
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  align-items: center;
+}
+
+.social-share img {
+  width: 24px;
+  height: 24px;
+  margin-right: 5px;
+}
+
+/* Accessibility enhancements */
+.social-share a:focus, .social-share a:hover {
+  outline: 2px solid #000; /* High contrast outline for focus */
+  outline-offset: 2px;
+}
+
