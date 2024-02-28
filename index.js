@@ -178,14 +178,14 @@ app.get('/', function (req, res) {
 
   var posts = {
     method: 'get',
-    url: `${process.env.cmsurl}api/posts?sort=Publication_date%3Adesc&pagination[limit]=6&populate=%2A`,
+    url: `${process.env.cmsurl}api/posts?sort=Publication_date%3Adesc&pagination[limit]=3&populate=%2A`,
     headers: {
       Authorization: 'Bearer ' + process.env.apikey,
     },
   }
   var postsolder = {
     method: 'get',
-    url: `${process.env.cmsurl}api/posts?sort=Publication_date%3Adesc&pagination[start]=7&pagination[limit]=6&populate=%2A`,
+    url: `${process.env.cmsurl}api/posts?sort=Publication_date%3Adesc&pagination[start]=4&pagination[limit]=6&populate=%2A`,
     headers: {
       Authorization: 'Bearer ' + process.env.apikey,
     },
