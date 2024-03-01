@@ -13,6 +13,8 @@ require('dotenv').config()
 const app = express()
 
 const notify = new NotifyClient(process.env.notifyKey)
+const airtable = require('airtable');
+const base = new airtable({ apiKey: process.env.airtableFeedbackKey }).base(process.env.airtableFeedbackBase);
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
@@ -102,6 +104,7 @@ app.get('/search', async (req, res) => {
 
 
 });
+
 
 app.get('/start-design-history', (req, res) => {
   return res.render('start-design-history')
@@ -250,6 +253,55 @@ app.get('/', function (req, res) {
       console.log(error)
     })
 })
+
+// Route for handling Yes/No feedback submissions
+app.post('/form-response/helpful', (req, res) => {
+  const { response } = req.body;
+  const service = "Design history";
+  const pageURL = req.headers.referer || 'Unknown';
+  const date = new Date().toISOString();
+
+  base('Data').create([
+      {
+          "fields": {
+              "Response": response,
+              "Service": service,
+              "URL": pageURL
+          }
+      }
+  ], function(err) {
+      if (err) {
+          console.error(err);
+          return res.status(500).send('Error saving to Airtable');
+      }
+      res.json({ success: true, message: 'Feedback submitted successfully' });
+  });
+});
+
+// New route for handling detailed feedback submissions
+app.post('/form-response/feedback', (req, res) => {
+  const { response } = req.body;
+  
+  const service = "Design history"; // Example service name
+  const pageURL = req.headers.referer || 'Unknown'; // Attempt to capture the referrer URL
+  const date = new Date().toISOString();
+
+  base('Feedback').create([{
+      "fields": {
+          "Feedback": response,
+          "Service": service,
+          "URL": pageURL
+      }
+  }], function(err) {
+      if (err) {
+          console.error(err);
+          return res.status(500).send('Error saving to Airtable');
+      }
+      res.json({ success: true, message: 'Feedback submitted successfully' });
+  });
+});
+
+
 
 app.post('/password', function (req, res) {
 
