@@ -43,12 +43,8 @@
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-Z4G55VN0FB"></script>
 
 <body class="govuk-template__body ">
-  <script>
-    document.body.className = (
-      (document.body.className)
-        ? document.body.className + ' js-enabled'
-        : 'js-enabled');
-  </script>
+  <script>document.body.className += ' js-enabled' + ('noModule' in HTMLScriptElement.prototype ? ' govuk-frontend-supported' : '');</script>
+
 
   <script type="application/ld+json">
         {
@@ -88,6 +84,7 @@
 
   {% include 'layouts/_topnav.html'%}
 
+  {% include 'layouts/_services.html'%}
 
   {% block header %}
 
@@ -163,10 +160,10 @@
 
   {% block scripts %}{% endblock %}
 
-  <script>
-    window
-      .GOVUKFrontend
-      .initAll()
+  <script type="module" src="/assets/js/govuk/all.bundle.min.js"></script>
+  <script type="module">
+    import { initAll } from '/assets/js/govuk/all.bundle.min.js'
+    initAll()
   </script>
 
 </body>

@@ -84,6 +84,7 @@
   <a href="#main-content" class="govuk-skip-link" data-module="govuk-skip-link">Skip to main content</a>
 
   {% include 'layouts/_topnav.html'%}
+  {% include 'layouts/_services.html'%}
 
 
   {% block header %}
@@ -159,9 +160,9 @@
   <script src="/assets/js/feedback.min.js"></script>
   <script src="/assets/js/dfefrontend.min.js"></script>
   {% block scripts %}{% endblock %}
-  <script type="module" src="/assets/js/govuk-frontend.min.min.js"></script>
+  <script type="module" src="/assets/js/govuk/all.bundle.min.js"></script>
   <script type="module">
-    import { initAll } from '/assets/js/govuk-frontend.min.min.js'
+    import { initAll } from '/assets/js/govuk/all.bundle.min.js'
     initAll()
   </script>
 </body>
