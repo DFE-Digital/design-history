@@ -444,9 +444,11 @@ app.get('/teams', function (req, res) {
 })
 
 app.get('/team/:id', function (req, res) {
+  console.log(req.params.id)
+  const slug = req.params.id
   var config = {
     method: 'get',
-    url: `${process.env.cmsurl}api/teams?filters[slug][\$eq]=${req.params.id}&populate=%2A`,
+    url: `${process.env.cmsurl}api/teams?filters[Slug][\$eq]=${slug}&populate=%2A`,
     headers: {
       Authorization: 'Bearer ' + process.env.apikey,
     },
@@ -456,7 +458,7 @@ app.get('/team/:id', function (req, res) {
     .then(function (response) {
       var services = response.data
 
-      console.log(services)
+      console.log(services.data)
 
       res.render('team.html', { services })
     })
@@ -525,7 +527,7 @@ app.get('/tag/:id', function (req, res) {
 app.get('/:service_slug/:post_slug', function (req, res) {
   var config = {
     method: 'get',
-    url: `${process.env.cmsurl}api/posts?filters[slug][\$eq]=${req.params.post_slug}&[service][slug][\$eq]=${req.params.service_slug}&populate=%2A`,
+    url: `${process.env.cmsurl}api/posts?filters[Slug][\$eq]=${req.params.post_slug}&[service][Slug][\$eq]=${req.params.service_slug}&populate=%2A`,
     headers: {
       Authorization: 'Bearer ' + process.env.apikey,
     },
@@ -533,7 +535,7 @@ app.get('/:service_slug/:post_slug', function (req, res) {
 
   var service = {
     method: 'get',
-    url: `${process.env.cmsurl}api/services?filters[slug][\$eq]=${req.params.service_slug}&populate=%2A`,
+    url: `${process.env.cmsurl}api/services?filters[Slug][\$eq]=${req.params.service_slug}&populate=%2A`,
     headers: {
       Authorization: 'Bearer ' + process.env.apikey,
     },
@@ -549,6 +551,7 @@ app.get('/:service_slug/:post_slug', function (req, res) {
 
           console.log('Get post')
 
+          // only check if a service has a password
 
           if (data.data[0].attributes.service.data.Password !== undefined) {
 
@@ -577,9 +580,10 @@ app.get('/:service_slug/:post_slug', function (req, res) {
 
 
 app.get('/:id', function (req, res) {
+  const slug = req.params.id
   var config = {
     method: 'get',
-    url: `${process.env.cmsurl}api/posts?filters[service][slug][\$eq]=${req.params.id}&pagination[start]=0&pagination[limit]=100&sort=Publication_date%3Adesc&populate=%2A`,
+    url: `${process.env.cmsurl}api/posts?filters[service][Slug][\$eq]=${slug}&pagination[start]=0&pagination[limit]=100&sort=Publication_date%3Adesc&populate=%2A`,
     headers: {
       Authorization: 'Bearer ' + process.env.apikey,
     },
@@ -587,7 +591,7 @@ app.get('/:id', function (req, res) {
 
   var service = {
     method: 'get',
-    url: `${process.env.cmsurl}api/services?filters[slug][\$eq]=${req.params.id}&populate=%2A`,
+    url: `${process.env.cmsurl}api/services?filters[Slug][\$eq]=${req.params.id}&populate=%2A`,
     headers: {
       Authorization: 'Bearer ' + process.env.apikey,
     },
