@@ -11,7 +11,7 @@
 
 
 {% set service = data.service.data.attributes.Title %}
-{% set team = data.team.data.attributes.Title %}
+{% set team = services.data[0].attributes.team.data.attributes.Title %}
 {% set serviceSlug = data.service.data.attributes.Slug %}
 {% set slug = data.Slug %}
 
