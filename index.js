@@ -470,7 +470,7 @@ app.get('/team/:id', function (req, res) {
 app.get('/tag/:id', function (req, res) {
   var config = {
     method: 'get',
-    url: `${process.env.cmsurl}api/posts?filters[tags][slug][\$eq]=${req.params.id}&populate=%2A`,
+    url: `${process.env.cmsurl}api/posts?filters[tags][Slug][\$eq]=${req.params.id}&populate=%2A`,
     headers: {
       Authorization: 'Bearer ' + process.env.apikey,
     },
@@ -478,7 +478,7 @@ app.get('/tag/:id', function (req, res) {
 
   var tag = {
     method: 'get',
-    url: `${process.env.cmsurl}api/tags?filters[slug][\$eq]=${req.params.id}&populate=%2A`,
+    url: `${process.env.cmsurl}api/tags?filters[Slug][\$eq]=${req.params.id}&populate=%2A`,
     headers: {
       Authorization: 'Bearer ' + process.env.apikey,
     },

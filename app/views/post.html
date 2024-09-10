@@ -12,6 +12,13 @@
 
 {% set service = data.service.data.attributes.Title %}
 {% set team = data.team.data.attributes.Title %}
+{% set serviceSlug = data.service.data.attributes.Slug %}
+{% set slug = data.Slug %}
+
+{% set selectedNav = "Guidance" %}
+
+{% set pageName = data.Title %}
+{% set pageDescription = data.Lede %}   
 
 {% set dateUpdated = (data.Publication_date if data.Publication_date else
 data.publishedAt
@@ -20,7 +27,7 @@ data.publishedAt
 
 
 {% block breadcrumb %}
-<div class="govuk-breadcrumbs">
+<div class="govuk-breadcrumbs govuk-!-margin-bottom-0 govuk-!-padding-bottom-0">
     <ol class="govuk-breadcrumbs__list">
         <li class="govuk-breadcrumbs__list-item">
             <a class="govuk-breadcrumbs__link" href="/">Home</a>

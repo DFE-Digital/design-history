@@ -4,58 +4,62 @@
 <!DOCTYPE html>
 <html lang="en" class="govuk-template ">
 
-<head>
-  <meta charset="utf-8">
-  <title>
-    {% if seoPageName %}{{seoPageName}}
-    {% elseif pageName %}{{pageName}}{% else%}Design History service{%endif%}</title>
-  <meta name="description"
+  <head>
+    <meta charset="utf-8">
+    <title>
+      {% if seoPageName %}{{seoPageName}}
+      {% elseif pageName %}{{pageName}}{% else%}{%endif%} - Design histories - Department for Education</title>
+      <meta name="description"
     content="{% if seoPageDescription %}{{seoPageDescription}}{% elseif pageName %}{{pageDescription}}{%endif%}">
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#00294a">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <link rel="shortcut icon" sizes="16x16 32x32 48x48" href="/assets/images/favicon.ico" type="image/x-icon">
-  <link rel="mask-icon" href="/assets/images/govuk-mask-icon.svg" color="#0b0c0c">
-  <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/govuk-apple-touch-icon-180x180.png">
-  <link rel="apple-touch-icon" sizes="167x167" href="/assets/images/govuk-apple-touch-icon-167x167.png">
-  <link rel="apple-touch-icon" sizes="152x152" href="/assets/images/govuk-apple-touch-icon-152x152.png">
-  <link rel="apple-touch-icon" href="/assets/images/govuk-apple-touch-icon.png">
-  <link href="/assets/css/app.min.css" rel="stylesheet">
+      <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+      <meta name="theme-color" content="#00294a">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <link rel="shortcut icon" sizes="16x16 32x32 48x48" href="/assets/images/favicon.ico" type="image/x-icon">
+      <link rel="mask-icon" href="/assets/images/govuk-mask-icon.svg" color="#0b0c0c">
+      <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/govuk-apple-touch-icon-180x180.png">
+      <link rel="apple-touch-icon" sizes="167x167" href="/assets/images/govuk-apple-touch-icon-167x167.png">
+      <link rel="apple-touch-icon" sizes="152x152" href="/assets/images/govuk-apple-touch-icon-152x152.png">
+      <link rel="apple-touch-icon" href="/assets/images/govuk-apple-touch-icon.png">
+      <link href="/assets/css/app.min.css" rel="stylesheet">
 
-  <meta property="og:url" content="https://design-histories.education.gov.uk" />
-  <meta property="og:site_name" content="Design Histories" />
-  <meta property="og:title" content="{{pageName}}" />
-  <meta property="og:description"
+      <meta property="og:url" content="https://design-histories.education.gov.uk" />
+      <meta property="og:site_name" content="Design Histories" />
+      <meta property="og:title" content="{{pageName}}" />
+      <meta property="og:description"
     content="{% if seoPageDescription %}{{seoPageDescription}}{% elseif pageName %}{{pageDescription}}{%endif%}" />
-  <meta property="og:type" content="website" />
-  <meta property="og:locale" content="en_GB" />
-  <meta property="og:image" content='https://design-histories.education.gov.uk/assets/images/og-image.png' />
+      <meta property="og:type" content="website" />
+      <meta property="og:locale" content="en_GB" />
+      <meta property="og:image" content='https://design-histories.education.gov.uk/assets/images/og-image.png' />
 
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:site" content="@dfe_digital">
-  <meta name="twitter:creator" content="@dfe_digital">
-  <meta name="twitter:image:alt" content="Design Histories">
-  <meta name="google-site-verification" content="78BmMoejRsC4auIyTs5JLkClgxvWYGDAYMIikFxTNPA" />
+      <meta name="twitter:card" content="summary_large_image">
+      <meta name="twitter:site" content="@dfe_digital">
+      <meta name="twitter:creator" content="@dfe_digital">
+      <meta name="twitter:image:alt" content="Design Histories">
+      <meta name="google-site-verification" content="78BmMoejRsC4auIyTs5JLkClgxvWYGDAYMIikFxTNPA" />
 
-  <script src="https://kit.fontawesome.com/3015bc434a.js" crossorigin="anonymous"></script>
-  {% block head %}{% endblock %}
-</head>
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-Z4G55VN0FB"></script>
+      <script src="https://kit.fontawesome.com/3015bc434a.js" crossorigin="anonymous"></script>
+      {% block head %}{% endblock %}
+    </head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-Z4G55VN0FB"></script>
 
-<body class="govuk-template__body ">
-  <script>document.body.className += ' js-enabled' + ('noModule' in HTMLScriptElement.prototype ? ' govuk-frontend-supported' : '');</script>
+    <body class="govuk-template__body ">
+      <script>
+        document.body.className += ' js-enabled' + (
+          'noModule' in HTMLScriptElement.prototype
+          ? ' govuk-frontend-supported'
+          : '');
+      </script>
 
-
-  <script type="application/ld+json">
+      <script type="application/ld+json">
         {
           "@context": "https://schema.org",
           "@type": "Blog",
-          "name": "Design Histories - Department for Education",
-          "url": "https://design-histories.education.gov.uk",
-          "description": "Documenting changes to services over time from teams in the Department for Education.",
+          "name": "{{pageName}} - Design histories - Department for Education",
+          "url": "https://design-histories.education.gov.uk/{{teamSlug}}",
+          "description": "{{pageDescription}}",
           "publisher": {
             "@type": "Organization",
-            "name": "GOV.UK",
+            "name": "Department for Education",
             "logo": {
               "@type": "ImageObject",
               "url": "https://upload.wikimedia.org/wikipedia/en/6/68/Department_for_Education.svg",
@@ -66,12 +70,12 @@
           "blogPost": [
             {
               "@type": "BlogPosting",
-              "headline": "{{pageName}}",
+              "headline": "{{pageName}} - Design histories - Department for Education",
               "datePublished": "{{dateUpdated}}",
               "dateModified": "{{dateUpdated}}",
               "author": {
                 "@type": "Person",
-                "name": "Author Name"
+                "name": "Department for Education"
               }
               "description": "{{pageDescription}}"
             }
@@ -79,93 +83,93 @@
         }
       </script>
 
-  {% include 'layouts/_cookiebanner.html'%}
-  <a href="#main-content" class="govuk-skip-link" data-module="govuk-skip-link">Skip to main content</a>
+      {% include 'layouts/_cookiebanner.html'%}
+      <a href="#main-content" class="govuk-skip-link" data-module="govuk-skip-link">Skip to main content</a>
 
-  {% include 'layouts/_topnav.html'%}
+      {% include 'layouts/_topnav.html'%}
 
-  {% include 'layouts/_services.html'%}
+      {% include 'layouts/_services.html'%}
 
-  {% block header %}
+      {% block header %}
 
-  {% include 'layouts/_header.html'%}
+        {% include 'layouts/_header.html'%}
 
-  {% endblock %}
+      {% endblock %}
 
-  {% block main %}
+      {% block main %}
 
-  <div class="dfe-content-page--header">
-    <div class="dfe-width-container ">
+        <div class="dfe-content-page--header">
+          <div class="dfe-width-container ">
 
-      <div class="govuk-grid-row ">
-        <div class="govuk-grid-column-three-quarters">
-          {% block breadcrumb %}{% endblock %}
+            <div class="govuk-grid-row ">
+              <div class="govuk-grid-column-three-quarters">
+                {% block breadcrumb %}{% endblock %}
+              </div>
+            </div>
+
+            <div class="govuk-grid-row govuk-!-padding-top-5 govuk-!-padding-bottom-0">
+
+              <div class="govuk-grid-column-three-quarters">
+
+                <h1 class="govuk-heading-xl govuk-!-margin-bottom-4">{{pageName}}</h1>
+                <p class="govuk-body-l">{{pageDescription}}</p>
+
+                {% if dateUpdated %}
+
+                  <p class="govuk-body-s govuk-!-margin-bottom-0">
+                    <span class="govuk-!-font-weight-bold">Last updated: </span>
+                    {{dateUpdated | date('D MMMM YYYY')}}
+                  </p>
+
+                {% endif %}
+
+              </div>
+            </div>
+            <div class="govuk-grid-row govuk-!-padding-top-0 govuk-!-padding-bottom-7">
+              <div class="govuk-grid-column-full">
+                {% block heroExtra %}{% endblock %}
+
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
 
-      <div class="govuk-grid-row govuk-!-padding-top-5 govuk-!-padding-bottom-0">
+        <div class="govuk-width-container dfe-width-container">
+          <main class="govuk-main-wrapper " id="main-content" role="main">
 
-        <div class="govuk-grid-column-three-quarters">
+            <div class="govuk-grid-row">
 
-          <h1 class="govuk-heading-xl govuk-!-margin-bottom-4">{{pageName}}</h1>
-          <p class="govuk-body-l">{{pageDescription}}</p>
+              <div class="govuk-grid-column-full">
+                {% block content %}{% endblock %}
 
-          {% if dateUpdated %}
+              </div>
 
-          <p class="govuk-body-s govuk-!-margin-bottom-0">
-            <span class="govuk-!-font-weight-bold">Last updated: </span>
-            {{dateUpdated | date('D MMMM YYYY')}}
-          </p>
+            </div>
 
-          {% endif %}
-
+          </main>
         </div>
-      </div>
-      <div class="govuk-grid-row govuk-!-padding-top-0 govuk-!-padding-bottom-7">
-        <div class="govuk-grid-column-full">
-          {% block heroExtra %}{% endblock %}
+      {% endblock %}
 
-        </div>
-      </div>
     </div>
-  </div>
 
-  <div class="govuk-width-container dfe-width-container">
-    <main class="govuk-main-wrapper " id="main-content" role="main">
+    {% block footer %}
+      {% include 'layouts/_footer.html'%}
+    {% endblock %}
 
-      <div class="govuk-grid-row">
+    <script src="/assets/js/all.min.js"></script>
+    <script src="/assets/js/cookies.min.js"></script>
+    <script src="/assets/js/feedback.min.js"></script>
+    <script src="/assets/js/dfefrontend.min.js"></script>
+    <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-63f3e6f098db5e04"></script>
 
-        <div class="govuk-grid-column-full">
-          {% block content %}{% endblock %}
+    {% block scripts %}{% endblock %}
 
-        </div>
+    <script type="module" src="/assets/js/govuk/all.bundle.min.js"></script>
+    <script type="module">
+      import {initAll} from '/assets/js/govuk/all.bundle.min.js'
+      initAll()
+    </script>
 
-      </div>
-
-    </main>
-  </div>
-  {% endblock %}
-
-  </div>
-
-  {% block footer %}
-  {% include 'layouts/_footer.html'%}
-  {% endblock %}
-
-  <script src="/assets/js/all.min.js"></script>
-  <script src="/assets/js/cookies.min.js"></script>
-  <script src="/assets/js/feedback.min.js"></script>
-  <script src="/assets/js/dfefrontend.min.js"></script>
-  <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-63f3e6f098db5e04"></script>
-
-  {% block scripts %}{% endblock %}
-
-  <script type="module" src="/assets/js/govuk/all.bundle.min.js"></script>
-  <script type="module">
-    import { initAll } from '/assets/js/govuk/all.bundle.min.js'
-    initAll()
-  </script>
-
-</body>
+  </body>
 
 </html>
