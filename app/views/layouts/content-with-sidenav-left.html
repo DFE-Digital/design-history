@@ -24,9 +24,9 @@
 
       <meta property="og:url" content="https://design-histories.education.gov.uk/{{serviceSlug}}/{{slug}}" />
       <meta property="og:site_name" content="Design histories" />
-      <meta property="og:title" content="{{pageName}}" />
+      <meta property="og:title" content="{{pageName}} - Design histories - Department for Education" />
       <meta property="og:description"
-    content="{% if seoPageDescription %}{{seoPageDescription}}{% elseif pageName %}{{pageDescription}}{%endif%}" />
+    content="{% if seoPageDescription %}{{seoPageDescription}}{% else %}{{pageDescription}}{%endif%}" />
       <meta property="og:type" content="website" />
       <meta property="og:locale" content="en_GB" />
       <meta property="og:image" content='https://design-histories.education.gov.uk/assets/images/og-image.png' />
