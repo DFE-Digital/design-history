@@ -551,8 +551,9 @@ app.get('/:service_slug/:post_slug', function (req, res) {
 
           console.log('Get post')
 
+          // only check if a service has a password
 
-          if (data.data[0].attributes.service.data.attributes.Password !== undefined) {
+          if (data.data[0].attributes.service.data.attributes.Password !== null) {
 
             console.log('Has password')
 
