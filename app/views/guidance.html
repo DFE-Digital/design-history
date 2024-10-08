@@ -30,14 +30,12 @@ All designers working on service teams in DfE are required to work in the open a
 
 There are posts available on the [DfE digital blog](https://dfedigital.blog.gov.uk/) and [Design in government blog](https://designnotes.blog.gov.uk/) with more information and advice on the why and how to develop a design history for your service.  
 
-You need to have approval from your Deputy Director (DD) to create a design history for your service. DDs can then delegate approval of individual posts to policy and product managers, this should be reviewed every 12 months. Also, consider if you need to liaise with [central DfE communication colleagues](https://educationgovuk.sharepoint.com/sites/communications/SitePages/strategic-communications-planning.aspx), depending on the nature and sensitivity of the project.
-
 Teams can create a design history for each of the services in their area. 
 
 ## Set up a new team
 
-1. Check if your team already exists in Content Manager > Team.
-2.	If not, click ‘Create a new entry’.
+1. In Strapi, check if your team already exists in Content Manager > Team.
+2.	If not, click ‘Create new entry’.
 3.	Enter the team name in the Title field.
 4.	Use a single word or hyphenated words for the Slug (for example, 'design-ops').
 5.	Set Enabled to ‘True’ to make the team design history live.
@@ -46,7 +44,7 @@ Teams can create a design history for each of the services in their area.
 
 ## Set up a new service
 
-1.	Go to Content Manager > Service to see existing services.
+1.	In Strapi, go to Content Manager > Service to see existing services.
 2.	Click ‘Create new entry’ to add your service.
 3.	Enter the service name in the Title field.
 4.	Use a single word or hyphenated words for the Slug (for example, 'accessibility-manual').
@@ -93,17 +91,23 @@ It’s tempting to include screenshots of service pages in design history posts.
 
 Text in images is not automatically read out to screenreader users unless there’s alt text. They can also pixelate for magnification users, who do not have access to the alt text.
 
-Instead of including a screenshot you can either include the text you changed when writing about what you changed or link to the specific page in a prototype.
+Instead of including a screenshot, you can either include the text you changed when writing about what you changed or link to the specific page in a prototype.
 
 ## Screenshots
 
-If you do need to include screenshots, you should write out the text from each image in the post so that it’s accessible to magnification users and screenreader users. It’s best to use the alt text field when you upload the screenshot to say where in the post you’ve described it and write out the full description in the body content. For example, an alt text field could say ‘screenshot described under image’. Include information in your description about the layout of the page, like which text is the title, what has radio buttons or checkboxes and what the button says. Any information that’s available to fully sighted users’ needs to be available as text.
+If you do need to include screenshots, you should write out the text from each image in the post so that it’s accessible to magnification users and screenreader users. 
+
+It’s best to use the alt text field when you upload the screenshot to say where in the post you’ve described it and write out the full description in the body content. For example, an alt text field could say ‘screenshot described under image’. 
+
+Include information in your description about the layout of the page, like which text is the title, what has radio buttons or checkboxes and what the button says. 
+
+Any information that’s available to fully sighted users’ needs to be available as text.
 
 ## Alt text
 
-The alt text character limit is 255 in the Strapi content management system. There is <a
+The alt text character limit is 255 in Strapi. There is <a
   href="https://design-system.service.gov.uk/styles/images/#alt-text" rel="noopener norferrer" target="_blank">guidance
-  on how to write alt text in the service manual</a>.
+  on how to write alt text in the service manual (opens in new tab)</a>.
 
 ## Captions
 
@@ -120,7 +124,11 @@ You should then fully describe that image in your body text.
 
 When including snippets of content in the body text of your post, introduce them with a sentence like ‘The content is’ and use the ‘inset text’ code to format the content snippet. This makes clear it is example content.
 
-You do not need to add quotation marks to content inside the inset text div. If any of the content in your snippet is a header, do not format it as a header. Formatting it as a header would confuse the structure and impact on accessibility Instead, you can format headers as bold. As it’s inside a div, you will need to use the `<strong></strong>` html to do this, rather than Markdown.
+You do not need to add quotation marks to content inside the inset text div. 
+
+If any of the content in your snippet is a header, do not format it as a header. Formatting it as a header would confuse the structure and impact on accessibility.
+
+Instead, you can format headers as bold. As it’s inside a div, you will need to use the `<strong></strong>` html to do this, rather than Markdown.
 
 The code for the div for a content snippet is:
 
@@ -132,16 +140,18 @@ The code for the div for a content snippet is:
 
 ## Tags
 
-There are currently tags relating to internal teams who own internal services, big programmes such as schools, apprenticeships and supporting families. There are also tags for user groups, types of service and user-centred design theme of post. To request a new tag contact the [Design Ops team](https://educationgovuk.sharepoint.com/sites/DesignOps)(DfE intranet link). 
+There are currently tags relating to internal teams who own internal services in Strapi, big programmes such as schools, apprenticeships and supporting families. 
+
+There are also tags for user groups, types of service and user-centred design themes. To request a new tag contact <a href="mailto:design.ops@education.gov.uk">DesignOps/a>.
 
 ## Making your design history post private
 
-You may need to make all or some of your design history posts 'private', allowing only users with a password to access them.
+You may need to make all, or some of, your design history posts 'private'. This allows only users with a password to access them.
 
 To make your design history private:
 * find your design history in the Service section of Strapi
 * add a password to the Password field
-* follow password-setting good practice
+* follow [password-setting good practice](https://support.microsoft.com/en-gb/windows/create-and-use-strong-passwords-c5cebb49-8c53-4f5e-2bc4-fe357ca048eb)
 
 This removes your design history from the Services for your team’s page. The private design history will only be accessible with the URL and password.
 
@@ -150,9 +160,9 @@ This removes your design history from the Services for your team’s page. The p
 If you’re not sure whether to make your design history post private, speak with your:
 * product manager
 * service owner
-* subject matter experts
+* subject-matter experts
 
-If you need further advice on design histories, [ask the DesignOps team](https://design.education.gov.uk/design-ops).
+If you need further advice on design histories, contact <a href="mailto:design.ops@education.gov.uk">DesignOps/a>.
 
 {% endmarkdown %}
 {% endblock %}
