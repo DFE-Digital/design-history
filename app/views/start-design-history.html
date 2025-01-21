@@ -1,7 +1,6 @@
 {% extends "layouts/content-with-sidenav-left.html" %}
 {% set pageName = "Start a design history" %}
-{% set pageDescription = "Start a design history for a Department for Education service and start sharing how a service
-changes over time."%}
+{% set pageDescription = "Request access to the content management system to document and share how your service changes over time."%}
 {% set selectedNav = "Guidance" %}
 
 
@@ -13,12 +12,11 @@ changes over time."%}
 
 
   <ul class="dfe-vertical-nav__section">
-
-    <li class="dfe-vertical-nav__section-item">
-      <a class="dfe-vertical-nav__link" href="/guidance">Guidance for design history users</a>
-    </li>
     <li class="dfe-vertical-nav__section-item  dfe-vertical-nav__section-item--current">
       <a class="dfe-vertical-nav__link" href="/start-design-history">Start a design history</a>
+    </li>
+    <li class="dfe-vertical-nav__section-item">
+      <a class="dfe-vertical-nav__link" href="/guidance">Manage a design history</a>
     </li>
   </ul>
 </nav>
@@ -28,35 +26,31 @@ changes over time."%}
 {% block content %}
 
 
+      <p>A design history is a public way to document changes to a service. It tells the story of what design changes have be made and why.</p>
 
-      <h2>Why have a design history</h2>
+      <p>You can publish design histories using the Design histories CMS, which is maintained and supported by <a
+          href="https://design.education.gov.uk/design-ops">DesignOps</a>.</p>
 
-      <p>A design history is a great way to document changes to a service over time. </p>
+      <h2>Request access to CMS</h2>
 
-      <p>You can publish design histories using our CMS which is maintaned and supported by the <a
-          href="https://design.education.gov.uk/design-ops">Design Ops team</a>.</p>
-
-      <h2>Request access</h2>
-      <p>Access can only be provided to people with an education.gov.uk email address.</p>
-
-      <p>The Design Ops team will contact you within 2 working days with additonal information about how to access the
-        Design
-        History CMS service.</p>
+    <p>Access can only be provided to people with an education.gov.uk email address.</p>
 
       <form method="post">
 
         <div class="govuk-form-group">
           <label class="govuk-label" for="name">
-            What is your name
+            What is your name?
           </label>
           <input class="govuk-input govuk-!-width-one-half" id="name" name="name" type="text">
         </div>
         <div class="govuk-form-group">
           <label class="govuk-label" for="email">
-            What is your email address
+            What is your email address?
           </label>
           <input class="govuk-input govuk-!-width-one-half" id="email" name="email" type="text">
         </div>
+        
+        <p>DesignOps will contact you within 2 working days with details to sign in to the CMS.</p>
 
         <button class="govuk-button" data-module="govuk-button">
           Send request
@@ -64,11 +58,14 @@ changes over time."%}
 
       </form>
 
-      <h2>Guidance for using the CMS</h2>
+      <h2>Get approval before starting a design history</h2>
 
-      <p>We have put together <a href="/guidance">step by step guidance</a> for starting a design history, managing
-        images and
-        media and writing posts.</p>
+      <p>You need to have approval from your Deputy Director (DD) to create a design history for your service.</p>
+
+      <p>DDs can then delegate approval of individual posts to policy and product managers, this should be reviewed every 12 months.</p>
+
+      <p>Also, consider if you need to liaise with <a
+          href="https://educationgovuk.sharepoint.com/sites/communications/SitePages/strategic-communications-planning.aspx">central DfE communication colleagues</a>, depending on the nature and sensitivity of the project.</p>
 
 
 {% endblock %}
