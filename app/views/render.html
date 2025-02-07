@@ -1,0 +1,46 @@
+
+{% extends "layouts/content-with-sidenav.html" %}
+
+{% block beforeContent %}{% endblock %}
+
+{% block content %}
+
+<style>
+  .article img {
+    margin-bottom: 50px;
+    max-width: 100%;
+  }
+</style>
+
+
+{% for post in posts %}
+
+<article class="article" style="margin-bottom: 150px; border-bottom: 10px solid #cc0000; padding-bottom: 150px;">
+<p>Post link: <a href="https://design-histories.education.gov.uk/{{post.serviceSlug}}/{{post.postSlug}}">https://design-histories.education.gov.uk/{{post.serviceSlug}}/{{post.postSlug}}</a></p>
+<h1>{{ post.postTitle }}</h1>
+<p>{{ post.Lede }}</p>
+<p>Created: {{ post.createdAt | date('D MMMM YYYY') }}</p>
+<p>Published: {{ post.publishedAt | date('D MMMM YYYY') }}</p>
+<p>Updated: {{ post.updatedAt | date('D MMMM YYYY') }}</p>
+
+{% markdown %}
+{{ post.Body | safe }}
+{% endmarkdown %}
+
+<details class="govuk-details" data-module="govuk-details">
+  <summary class="govuk-details__summary">
+    <span class="govuk-details__summary-text">
+      Raw
+    </span>
+  </summary>
+  <div class="govuk-details__text">
+   {{post | dump }}
+  </div>
+
+
+</article>
+{% endfor %}
+
+
+
+{% endblock %}

@@ -43,7 +43,7 @@ app.use(session({
   resave: false,
   saveUninitialized: true,
   cookie: {
-    secure: false, 
+    secure: false,
     maxAge: 1200000 // 20 minutes
   }
 }))
@@ -262,44 +262,147 @@ app.post('/form-response/helpful', (req, res) => {
   const date = new Date().toISOString();
 
   base('Data').create([
-      {
-          "fields": {
-              "Response": response,
-              "Service": service,
-              "URL": pageURL
-          }
+    {
+      "fields": {
+        "Response": response,
+        "Service": service,
+        "URL": pageURL
       }
-  ], function(err) {
-      if (err) {
-          console.error(err);
-          return res.status(500).send('Error saving to Airtable');
-      }
-      res.json({ success: true, message: 'Feedback submitted successfully' });
+    }
+  ], function (err) {
+    if (err) {
+      console.error(err);
+      return res.status(500).send('Error saving to Airtable');
+    }
+    res.json({ success: true, message: 'Feedback submitted successfully' });
   });
 });
 
 // New route for handling detailed feedback submissions
 app.post('/form-response/feedback', (req, res) => {
   const { response } = req.body;
-  
+
   const service = "Design history"; // Example service name
   const pageURL = req.headers.referer || 'Unknown'; // Attempt to capture the referrer URL
   const date = new Date().toISOString();
 
   base('Feedback').create([{
-      "fields": {
-          "Feedback": response,
-          "Service": service,
-          "URL": pageURL
-      }
-  }], function(err) {
-      if (err) {
-          console.error(err);
-          return res.status(500).send('Error saving to Airtable');
-      }
-      res.json({ success: true, message: 'Feedback submitted successfully' });
+    "fields": {
+      "Feedback": response,
+      "Service": service,
+      "URL": pageURL
+    }
+  }], function (err) {
+    if (err) {
+      console.error(err);
+      return res.status(500).send('Error saving to Airtable');
+    }
+    res.json({ success: true, message: 'Feedback submitted successfully' });
   });
 });
+
+
+
+app.get('/all-team-posts/:id', async (req, res) => {
+  try {
+
+    if (req.params.id === process.env.teamexport) {
+
+      const posts = await getAllTeamPosts('regional-services-division');
+      //res.json(posts);
+
+      res.render('render', { posts });
+    }
+    else
+      res.status(403).json({ error: ' Forbidden' });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Error fetching posts' });
+  }
+});
+
+
+async function getAllTeamPosts(teamSlug) {
+  try {
+    // 1) Query the 'teams' collection, filtering by the slug
+    // 2) Populate 'services', and for each service populate 'posts'
+    const response = await axios.get(
+      `${process.env.cmsurl}api/teams` +
+      `?filters[Slug][$eq]=${teamSlug}` +
+      `&populate[services][populate]=posts` +
+      `&publicationState=preview`,
+      {
+        headers: {
+          Authorization: `Bearer ${process.env.apikey}`,
+        },
+      }
+    );
+    // Strapi returns data in the format: { data: [ { id, attributes: { ... } } ] }
+    const teamData = response.data.data;
+
+    console.log(teamData);
+
+    if (!teamData || teamData.length === 0) {
+      console.log(`No team found with slug: ${teamSlug}`);
+      return [];
+    }
+
+    // Since we filtered by slug, we expect exactly one team in the array
+    const team = teamData[0];
+
+    // Extract the team title and slug
+    const teamTitle = team.attributes.Title;
+    const teamSlugVal = team.attributes.Slug;
+
+    // 'services' is within team.attributes.services.data
+    const services = team.attributes.services?.data || [];
+
+    console.log(team.attributes.services)
+
+    let allPosts = [];
+
+    // Loop over each service
+    for (const service of services) {
+
+      // Extract the service title and slug
+      const serviceTitle = service.attributes.Title;
+      const serviceSlugVal = service.attributes.Slug;
+
+      // 'posts' is within service.attributes.posts.data
+      const posts = service.attributes.posts?.data || [];
+
+      // For each post, combine team, service, and post attributes
+      for (const post of posts) {
+        const postId = post.id;
+        const { Title: postTitle, Slug: postSlug, ...restPostAttrs } = post.attributes;
+
+        // Build a single “row” containing team, service, and post info
+        const combinedData = {
+          teamId: team.id,
+          teamTitle,
+          teamSlug: teamSlugVal,
+
+          serviceId: service.id,
+          serviceTitle,
+          serviceSlug: serviceSlugVal,
+
+          postId,
+          postTitle,
+          postSlug,
+          ...restPostAttrs, // If you want all other post attributes (like Content, etc.)
+        };
+
+        allPosts.push(combinedData);
+      }
+    }
+
+    return allPosts;
+  } catch (error) {
+    console.error('Error fetching posts:', error);
+    throw error;
+  }
+}
+
 
 
 
