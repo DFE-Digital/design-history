@@ -3,7 +3,7 @@
 {% from "govuk/components/cookie-banner/macro.njk" import govukCookieBanner %}
 
 <!DOCTYPE html>
-<html lang="en" class="govuk-template ">
+<html lang="en" class="govuk-template--rebranded ">
 
   <head>
     <meta charset="utf-8">
@@ -22,7 +22,7 @@
       <link rel="apple-touch-icon" sizes="152x152" href="/assets/images/govuk-apple-touch-icon-152x152.png">
       <link rel="apple-touch-icon" href="/assets/images/govuk-apple-touch-icon.png">
       <link href="/assets/css/app.min.css" rel="stylesheet">
-
+      <link href="/assets/css/_header.css" rel="stylesheet">
       <meta property="og:url" content="https://design-histories.education.gov.uk" />
       <meta property="og:site_name" content="Design histories" />
       <meta property="og:title" content="{{pageName}}" />
@@ -57,8 +57,6 @@
       {% include 'layouts/_cookiebanner.html'%}
       <a href="#main-content" class="govuk-skip-link" data-module="govuk-skip-link">Skip to main content</a>
 
-      {% include 'layouts/_topnav.html'%}
-      {% include 'layouts/_services.html'%}
 
       {% block header %}
 
@@ -95,6 +93,7 @@
     import {initAll} from '/assets/js/govuk/all.bundle.min.js'
     initAll()
   </script>
+  <script src="/assets/js/header.js"></script>
 </body>
 
 </html>

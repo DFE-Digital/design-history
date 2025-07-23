@@ -22,6 +22,7 @@
       <link rel="apple-touch-icon" href="/assets/images/govuk-apple-touch-icon.png">
       <link href="/assets/css/app.min.css" rel="stylesheet">
 
+      <link href="/assets/css/_header.css" rel="stylesheet">
       <meta property="og:url" content="https://design-histories.education.gov.uk/{{teamSlug}}" />
       <meta property="og:site_name" content="Design histories" />
       <meta property="og:title" content="{{pageName}}" />
@@ -86,9 +87,6 @@
       {% include 'layouts/_cookiebanner.html'%}
       <a href="#main-content" class="govuk-skip-link" data-module="govuk-skip-link">Skip to main content</a>
 
-      {% include 'layouts/_topnav.html'%}
-
-      {% include 'layouts/_services.html'%}
 
       {% block header %}
 
@@ -162,6 +160,7 @@
     <script src="/assets/js/dfefrontend.min.js"></script>
     <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-63f3e6f098db5e04"></script>
 
+  <script src="/assets/js/header.js"></script>
     {% block scripts %}{% endblock %}
 
     <script type="module" src="/assets/js/govuk/all.bundle.min.js"></script>
