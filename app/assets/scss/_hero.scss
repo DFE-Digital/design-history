@@ -7,7 +7,7 @@
     .govuk-body,
     .govuk-body-l,
     i {
-        color: govuk-colour("white");
+        color: govuk-colour("white")
     }
     .govuk-heading-xl,
     .govuk-heading-l {
@@ -19,7 +19,7 @@
     margin-top: govuk-spacing(0);
     padding-top: govuk-spacing(3);
     padding-bottom: govuk-spacing(0);
-    background-color: govuk-tint($color_dfe-blue, 90);
+    background-color: #f4f8fb;
     .govuk-heading-xl,
     .govuk-heading-l {
         margin-bottom: govuk-spacing(5);

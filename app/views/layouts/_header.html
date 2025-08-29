@@ -4,7 +4,7 @@
         <div class="govuk-width-container transparent-bottom-border">
             <div class="gem-c-layout-super-navigation-header__header-logo">
                 <a class="govuk-header__link govuk-header__link--homepage"        
-          id="logo" aria-label="Go to the GOV.UK homepage" href="/">
+          id="logo" aria-label="Go to the DfE homepage" href="https://www.gov.uk/government/organisations/department-for-education">
                     <img src="/public/images/department-for-education_white.png" alt="Department for Education"
             class="govuk-header__logotype">
                 </a>
@@ -134,3 +134,38 @@
         </nav>
     </div>
 </header>
+
+<section aria-label="Service information" class="govuk-service-navigation {% if selectedNav == 'Home' %}govuk-service-navigation--inverse{% endif %}"
+  data-module="govuk-service-navigation">
+  <div class="govuk-width-container">
+    <div class="govuk-service-navigation__container">
+      <span class="govuk-service-navigation__service-name">
+        <a href="/" class="govuk-service-navigation__link">
+          Design histories
+        </a>
+      </span>
+      <nav aria-label="Menu" class="govuk-service-navigation__wrapper">
+        <button type="button" class="govuk-service-navigation__toggle govuk-js-service-navigation-toggle" aria-controls="navigation" hidden>
+          Menu
+        </button>
+        <ul class="govuk-service-navigation__list" id="navigation">
+          <li class="govuk-service-navigation__item {% if selectedNav == 'Home' %}govuk-service-navigation__item--active{% endif %}">
+            <a class="govuk-service-navigation__link" href="/">
+             Home
+            </a>
+          </li>
+          <li class="govuk-service-navigation__item {% if selectedNav == 'Teams' %}govuk-service-navigation__item--active{% endif %}">
+            <a class="govuk-service-navigation__link" href="/teams" aria-current="true">
+              Teams
+            </a>
+          </li>
+          <li class="govuk-service-navigation__item {% if selectedNav == 'Guidance' %}govuk-service-navigation__item--active{% endif %}">
+            <a class="govuk-service-navigation__link" href="/guidance">
+              Start a design history
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+</section>
